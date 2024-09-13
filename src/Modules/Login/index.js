@@ -12,8 +12,14 @@ const LoginComponent = () => {
     const LoginClick = async (e) => {
         e.preventDefault();
         console.log(loginDetails)
-        const response = await LoginService(loginDetails)
-        console.log(response)
+        try {
+            const response = await LoginService(loginDetails)
+            console.log(response)
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 
     return (
