@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InputComponent from '../../Components/Input';
 import './login.css'
+import LoginService from '../../Lib/Services/Login';
 
 const LoginComponent = () => {
     const [loginDetails, setLoginDetails] = useState({ userName: '', password: '' })
@@ -8,9 +9,11 @@ const LoginComponent = () => {
         setLoginDetails((prev) => ({ ...prev, [name]: value }))
     }
 
-    const LoginClick = (e) => {
+    const LoginClick = async (e) => {
         e.preventDefault();
         console.log(loginDetails)
+        const response = await LoginService(loginDetails)
+        console.log(response)
     }
 
     return (
