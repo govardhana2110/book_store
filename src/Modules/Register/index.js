@@ -3,6 +3,7 @@ import InputComponent from "../../Components/Input";
 import "./register.css";
 import registerService from "../../Lib/Services/Login";
 import DropdownComponent from "../../Components/Dropdown";
+import { useNavigate } from "react-router-dom";
 
 const RegisterComponent = () => {
   const [registerDetails, setRegisterDetails] = useState({
@@ -16,6 +17,18 @@ const RegisterComponent = () => {
     { name: "Admin", value: "admin" },
     { name: "User", value: "user" },
   ];
+  const navigate = useNavigate();
+  const renderInput = (name, type) => {
+    return (
+      <InputComponent
+        value={registerDetails[name]}
+        required={true}
+        placeholder={name}
+        onChange={(e) => handleChange(e.target.value, name)}
+        type={type}
+      ></InputComponent>
+    );
+  };
   const handleChange = (value, name) => {
     setRegisterDetails((prev) => ({ ...prev, [name]: value }));
   };
@@ -30,7 +43,9 @@ const RegisterComponent = () => {
       console.log(err);
     }
   };
-
+  const backToLogin = () => {
+    navigate("/login");
+  };
   return (
     <div className="backGroundCard">
       <form onSubmit={(e) => registerClick(e)}>
@@ -47,35 +62,11 @@ const RegisterComponent = () => {
           >
             Register
           </label>
-          <InputComponent
-            value={registerDetails.userName}
-            required={true}
-            placeholder="User Name"
-            onChange={(e) => handleChange(e.target.value, "userName")}
-            type="text"
-          ></InputComponent>
+          {renderInput("userName", "text")}
           <DropdownComponent options={userTypes}></DropdownComponent>
-          <InputComponent
-            value={registerDetails.phone}
-            required={true}
-            placeholder="Phone"
-            onChange={(e) => handleChange(e.target.value, "phone")}
-            type="number"
-          ></InputComponent>
-          <InputComponent
-            value={registerDetails.email}
-            required={true}
-            placeholder="email"
-            onChange={(e) => handleChange(e.target.value, "email")}
-            type="text"
-          ></InputComponent>
-          <InputComponent
-            value={registerDetails.password}
-            required={true}
-            placeholder="Password"
-            onChange={(e) => handleChange(e.target.value, "password")}
-            type="password"
-          ></InputComponent>
+          {renderInput("phone", "number")}
+          {renderInput("email", "text")}
+          {renderInput("password", "password")}
           <div>
             <button
               type="submit"
@@ -88,9 +79,12 @@ const RegisterComponent = () => {
             >
               Register
             </button>
-          </div>                                                                                
+          </div>
           <label style={{ color: "black", fontSize: "small" }}>
-            Back to <a href="#">Login</a>
+            Back to{" "}
+            <a href="/login" onClick={() => backToLogin()}>
+              Login
+            </a>
           </label>
         </div>
       </form>

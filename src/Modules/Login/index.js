@@ -27,7 +27,9 @@ const LoginComponent = () => {
       console.log(err);
     }
   };
-
+  const navigateToRegister = () => {
+    navigate("/register");
+  };
   return (
     <div className="backGroundCard">
       <form onSubmit={(e) => loginClick(e)}>
@@ -72,7 +74,11 @@ const LoginComponent = () => {
             </button>
           </div>
           <label style={{ color: "black", fontSize: "small" }}>
-            New user ? <a href="#">Register</a> Here
+            New user ?{" "}
+            <a href="/register" onClick={() => navigateToRegister()}>
+              Register
+            </a>{" "}
+            Here
           </label>
         </div>
       </form>
