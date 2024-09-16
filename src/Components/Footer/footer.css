@@ -1,0 +1,9 @@
+.footerDiv {
+    background-color: white;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    display: flex;
+    width: 100vw;
+    bottom: 0;
+  }
+  

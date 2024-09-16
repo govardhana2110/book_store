@@ -1,0 +1,23 @@
+.mainDiv {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center;
+  color: black;
+  padding: 1rem;
+}
+.bookCard {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 7%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 10rem; 
+  min-height: 15rem;
+}
+.bookCard:hover {
+  transform: scale(1.05); /* Increase size slightly */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
