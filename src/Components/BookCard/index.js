@@ -1,10 +1,10 @@
 import React from "react";
 import "./bookCard.css";
-const BookCardComponent = ({ data }) => {
+const BookCardComponent = ({ data,addToCartClick }) => {
   return (
     <div className="mainDiv">
       {data &&
-        data.map((item) => (
+        data.map((item,index) => (
           <div className="bookCard">
             {" "}
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -18,7 +18,7 @@ const BookCardComponent = ({ data }) => {
             <label>Rating: {item.rating}</label>
             <label>Price: {item.price}</label>
             <label>Author: {item.author}</label>
-            <button>Add to cart +</button>
+            <button onClick={()=>addToCartClick(index)}>Add to cart +</button>
           </div>
         ))}
     </div>

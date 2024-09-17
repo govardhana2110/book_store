@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <RoutingModule></RoutingModule>
-        <FooterComponent></FooterComponent>
         {/* <LoginComponent /> */}
         {/* <RegisterComponent></RegisterComponent> */}
         {/* <FooterComponent /> */}
