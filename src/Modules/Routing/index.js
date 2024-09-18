@@ -5,6 +5,7 @@ import RegisterComponent from "../Register";
 import NotFoundModule from "../NotFound";
 import PrivateRoute from "./PrivateRoute";
 import HomeComponent from "../Home";
+import ManageInventryComponent from "../ManageInventry";
 
 const RoutingModule = () => {
   return (
@@ -18,6 +19,14 @@ const RoutingModule = () => {
           element={
             <PrivateRoute>
               <HomeComponent></HomeComponent>
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/manageInventry"
+          element={
+            <PrivateRoute>
+              <ManageInventryComponent></ManageInventryComponent>
             </PrivateRoute>
           }
         ></Route>

@@ -1,8 +1,36 @@
 .headDiv {
-  background-color: white;
+ /* background:linear-gradient(135deg,#f6d365 0%,#fda085 100%); */
+  /* background:linear-gradient(120deg,#a1c4fd 0%,#c2e9fb 50%,#fddb92 100%); */
+  /* background:linear-gradient(135deg,#fbfbfb 0%,#fbedee 50%,#accbee 100%); */
+  /* background:linear-gradient(45deg,#d4fc79 0%,#96e6a1 50%,#84fab0 100%); */
+  /* background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 55%,#fad0c4 100%); */
+  /* background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 40%,#f5e1f4 100%); */
+background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: black;
   display: flex;
   width: 100vw;
   position: fixed;
+  min-height: 3rem;
+  z-index: 10000;
+  top: 0%;
+}
+.profileIco {
+  height: "1rem";
+  width: "1rem";
+}
+.menuDiv {
+  position: absolute;
+  right: 0%;
+  top: 40px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  min-width: 50px;
+  color: black;
+}
+.profileIco:hover {
+  cursor: pointer;
 }
