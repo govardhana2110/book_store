@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "../../Components/Input";
 import "./login.css";
 import loginService from "../../Lib/Services/Login";
 import { useNavigate } from "react-router-dom";
+import HeaderComponent from "../../Components/Header";
 
 const LoginComponent = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -30,59 +31,63 @@ const LoginComponent = () => {
   const navigateToRegister = () => {
     navigate("/register");
   };
+  useEffect(()=>{localStorage.removeItem('authToken')},[])
   return (
-    <div className="backGroundCard">
-      <form onSubmit={(e) => loginClick(e)}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <label
-            style={{ color: "black", fontSize: "larger", fontWeight: "600" }}
+    <>
+      <HeaderComponent></HeaderComponent>
+      <div className="backGroundCard">
+        <form onSubmit={(e) => loginClick(e)}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
           >
-            Login
-          </label>
-          <InputComponent
-            value={loginDetails.userName}
-            required={true}
-            placeholder="User Name"
-            onChange={(e) => handleChange(e.target.value, "userName")}
-            type="text"
-          ></InputComponent>
-          <InputComponent
-            value={loginDetails.password}
-            required={true}
-            placeholder="Password"
-            onChange={(e) => handleChange(e.target.value, "password")}
-            type="password"
-          ></InputComponent>
-          <div>
-            <button
-              type="submit"
-              style={{
-                color: "white",
-                borderRadius: "10%",
-                background: "blue",
-                borderColor: "blue",
-              }}
+            <label
+              style={{ color: "black", fontSize: "larger", fontWeight: "600" }}
             >
-              Submit
-            </button>
+              Login
+            </label>
+            <InputComponent
+              value={loginDetails.userName}
+              required={true}
+              placeholder="User Name"
+              onChange={(e) => handleChange(e.target.value, "userName")}
+              type="text"
+            ></InputComponent>
+            <InputComponent
+              value={loginDetails.password}
+              required={true}
+              placeholder="Password"
+              onChange={(e) => handleChange(e.target.value, "password")}
+              type="password"
+            ></InputComponent>
+            <div>
+              <button
+                type="submit"
+                style={{
+                  color: "white",
+                  borderRadius: "10%",
+                  background: "blue",
+                  borderColor: "blue",
+                }}
+              >
+                Submit
+              </button>
+            </div>
+            <label style={{ color: "black", fontSize: "small" }}>
+              New user ?{" "}
+              <a href="/register" onClick={() => navigateToRegister()}>
+                Register
+              </a>{" "}
+              Here
+            </label>
           </div>
-          <label style={{ color: "black", fontSize: "small" }}>
-            New user ?{" "}
-            <a href="/register" onClick={() => navigateToRegister()}>
-              Register
-            </a>{" "}
-            Here
-          </label>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 export default LoginComponent;

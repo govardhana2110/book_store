@@ -8,8 +8,8 @@ import RoutingModule from './Modules/Routing';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="App" >
+      <header className="App-header" style={{backgroundImage:'/images/star_2.svg'}}>
         <RoutingModule></RoutingModule>
         {/* <LoginComponent /> */}
         {/* <RegisterComponent></RegisterComponent> */}

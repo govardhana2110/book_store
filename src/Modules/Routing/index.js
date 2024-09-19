@@ -6,6 +6,8 @@ import NotFoundModule from "../NotFound";
 import PrivateRoute from "./PrivateRoute";
 import HomeComponent from "../Home";
 import ManageInventryComponent from "../ManageInventry";
+import CheckOutComponent from "../CheckOut";
+import OrderHistoryComponent from "../OrderHistory";
 
 const RoutingModule = () => {
   return (
@@ -27,6 +29,22 @@ const RoutingModule = () => {
           element={
             <PrivateRoute>
               <ManageInventryComponent></ManageInventryComponent>
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/checkOut"
+          element={
+            <PrivateRoute>
+              <CheckOutComponent></CheckOutComponent>
+            </PrivateRoute>
+          }
+        ></Route>
+         <Route
+          path="/orderHistory"
+          element={
+            <PrivateRoute>
+              <OrderHistoryComponent></OrderHistoryComponent>
             </PrivateRoute>
           }
         ></Route>

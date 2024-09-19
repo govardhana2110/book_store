@@ -4,6 +4,7 @@ import HeaderComponent from "../../Components/Header";
 import FooterComponent from "../../Components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../Store/CartItems";
+import { useNavigate } from "react-router-dom";
 
 const HomeComponent = () => {
   const books = [
@@ -19,9 +20,14 @@ const HomeComponent = () => {
   ];
   const dispatch = useDispatch();
   const storeData = useSelector((state) => state.cartItems);
+  const navigate = useNavigate();
   const addToCartClick = (id) => {
     // console.log("came in", storeData);
     dispatch(setCartItems(books[id]));
+  };
+  const buyNowClick = (id) => {
+    dispatch(setCartItems(books[id]));
+    navigate("/checkOut");
   };
   return (
     <>
@@ -32,6 +38,7 @@ const HomeComponent = () => {
           <BookCardComponent
             data={books}
             addToCartClick={addToCartClick}
+            buyNowClick={buyNowClick}
           ></BookCardComponent>
         </div>
 

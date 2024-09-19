@@ -1,10 +1,11 @@
 import React from "react";
 import "./bookCard.css";
-const BookCardComponent = ({ data,addToCartClick }) => {
+import RatingComponent from "../Rating";
+const BookCardComponent = ({ data, addToCartClick,buyNowClick }) => {
   return (
     <div className="mainDiv">
       {data &&
-        data.map((item,index) => (
+        data.map((item, index) => (
           <div className="bookCard">
             {" "}
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -18,7 +19,29 @@ const BookCardComponent = ({ data,addToCartClick }) => {
             <label>Rating: {item.rating}</label>
             <label>Price: {item.price}</label>
             <label>Author: {item.author}</label>
-            <button onClick={()=>addToCartClick(index)}>Add to cart +</button>
+            <RatingComponent rating={2.5}></RatingComponent>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: "1rem",
+              }}
+            >
+              <button onClick={()=>buyNowClick(index)}>Buy Now</button>
+              <button
+                onClick={() => addToCartClick(index)}
+                style={{ display: "flex", alignItems: "center",gap:'0.5rem' }}
+              >
+                Add to cart{" "}
+                <img
+                  src="images/add-to-bag.png"
+                  alt="#"
+                  width={20}
+                  height={20}
+                ></img>
+              </button>
+            </div>
           </div>
         ))}
     </div>
