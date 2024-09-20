@@ -1,12 +1,26 @@
 import React from "react";
 import "./bookCard.css";
 import RatingComponent from "../Rating";
-const BookCardComponent = ({ data, addToCartClick,buyNowClick }) => {
+const BookCardComponent = ({
+  data,
+  addToCartClick,
+  buyNowClick,
+  onCardClick,
+}) => {
+  const cardClick = (e, id) => {
+    if (e.target.id !== "buyNow" && e.target.id !== "addToCart") {
+      onCardClick(id);
+    }
+  };
   return (
     <div className="mainDiv">
       {data &&
         data.map((item, index) => (
-          <div className="bookCard">
+          <div
+            className="bookCard"
+            id="card"
+            onClick={(e) => cardClick(e, index)}
+          >
             {" "}
             <div style={{ display: "flex", justifyContent: "center" }}>
               <img
@@ -28,10 +42,13 @@ const BookCardComponent = ({ data, addToCartClick,buyNowClick }) => {
                 gap: "1rem",
               }}
             >
-              <button onClick={()=>buyNowClick(index)}>Buy Now</button>
+              <button id="buyNow" onClick={() => buyNowClick(index)}>
+                Buy Now
+              </button>
               <button
+                id="addToCart"
                 onClick={() => addToCartClick(index)}
-                style={{ display: "flex", alignItems: "center",gap:'0.5rem' }}
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
               >
                 Add to cart{" "}
                 <img

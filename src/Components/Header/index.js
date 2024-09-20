@@ -68,7 +68,7 @@ const HeaderComponent = () => {
                 paddingRight: "2rem",
                 gap: "1rem",
               }}
-            >
+            > 
               {" "}
               <img
                 className="profileIco"

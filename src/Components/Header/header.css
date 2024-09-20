@@ -5,6 +5,18 @@
   /* background:linear-gradient(45deg,#d4fc79 0%,#96e6a1 50%,#84fab0 100%); */
   /* background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 55%,#fad0c4 100%); */
   /* background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 40%,#f5e1f4 100%); */
+   /* background-image: linear-gradient(
+    97.24deg,
+    #8320ff 3.22%,
+    #1168eb 49.19%,
+    #71eaff 97.11%
+  ); */
+  /* background: linear-gradient(
+    97.24deg,
+    rgba(131, 32, 255, 0.2) 3.22%,
+    rgba(17, 104, 235, 0.2) 49.19%,
+    rgba(113, 234, 255, 0.2) 97.11%
+  ); */
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: black;
@@ -26,9 +38,9 @@
 }
 .menuDiv {
   position: fixed;
-  right: 0%;
-  top: 40px;
-  background-color: white;
+  right: 3px;
+  top: 45px;
+  background-color:white  ;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 8px -4px 8px rgba(0, 0, 0, 0.2);

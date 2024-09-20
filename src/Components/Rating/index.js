@@ -8,7 +8,7 @@ const RatingComponent = ({ rating }) => {
         key={index}
         className="star"
         style={{
-          background: `linear-gradient(90deg, gold ${fillPercentage}%, lightgray ${fillPercentage}%)`,
+          background: `linear-gradient(90deg, gold ${fillPercentage}%, grey ${fillPercentage}%)`,
         }}
       ></div>
     );
