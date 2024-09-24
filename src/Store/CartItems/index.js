@@ -7,10 +7,12 @@ export const cartItemsSlice = createSlice({
     setCartItems(state, action) {
       let data = [...state.cartItems];
       const obj = {
-        title: action.payload?.data?.title,
-        rating: action.payload?.data?.rating,
-        price: action.payload?.data?.price,
-        author: action.payload?.data?.author,
+        title: action.payload?.title,
+        rating: action.payload?.rating,
+        price: action.payload?.price,
+        author: action.payload?.author,
+        image:action.payload?.image,
+        ratings:action.payload?.ratings
       };
       data.push(obj);
       state.cartItems = data;

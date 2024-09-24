@@ -22,7 +22,7 @@
   display: flex;
   position: relative; /* Positioned relative to the blurred background */
   justify-content: center;
-  width: fit-content;
+  width: 500px;
   padding: 20px;
   min-height: fit-content;
   z-index: 1000000;

@@ -68,7 +68,7 @@ const HeaderComponent = () => {
                 paddingRight: "2rem",
                 gap: "1rem",
               }}
-            > 
+            >
               {" "}
               <img
                 className="profileIco"
@@ -113,14 +113,14 @@ const HeaderComponent = () => {
           >
             Order History
           </label>
-          <hr style={{ color: "black" }}></hr>
+          <hr></hr>
           <label
             style={{ cursor: "pointer" }}
             onClick={() => onClick("/manageInventry")}
           >
             Manage Inventry
           </label>
-          <hr style={{ color: "black" }}></hr>
+          <hr></hr>
           <label style={{ cursor: "pointer" }} onClick={() => logoutClick()}>
             Logout
           </label>

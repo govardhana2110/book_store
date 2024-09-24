@@ -3,18 +3,17 @@
   flex-wrap: wrap;
   gap: 20px; /* Space between cards */
   justify-content: center;
-  color: black;
   padding: 1rem;
+  cursor: pointer;
 }
 .bookCard {
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   /* background-color: white; */
   /* background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 55%,#fad0c4 100%); */
   /* background:linear-gradient(135deg,#f6d365 0%,#fda085 100%); */
-  background:linear-gradient(120deg,#a1c4fd 0%,#c2e9fb 50%,#fddb92 100%);
-   /* background-image: linear-gradient(
+  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 50%, #fddb92 100%);
+  /* background-image: linear-gradient(
     97.24deg,
     #8320ff 3.22%,
     #1168eb 49.19%,
@@ -34,10 +33,27 @@
   box-shadow: 0 14px 16px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-width: 10rem; 
-  min-height: 15rem;
+  min-width: 10rem;
+  max-width: 8rem;
+  height: 15rem;
 }
 .bookCard:hover {
   transform: scale(1.05); /* Increase size slightly */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
+.truncate {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* .truncate:hover {
+  overflow: visible;       
+  white-space: normal;     
+  background-color: #f0f0f0; 
+  position: relative;     
+  z-index: 1;             
+} */

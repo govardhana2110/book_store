@@ -18,7 +18,6 @@ const LoginComponent = () => {
 
   const loginClick = async (e) => {
     e.preventDefault();
-    console.log(loginDetails);
     localStorage.setItem("authToken", "jhghjgfyuuy");
     navigate("/home");
     try {

@@ -26,14 +26,36 @@ const BookCardComponent = ({
               <img
                 src="images/book image.jpg"
                 alt="#"
-                style={{ height: "7rem", width: "5rem" }}
+                style={{ height: "6rem", width: "5rem" }}
               ></img>
             </div>
-            <label>Title: {item.title}</label>
-            <label>Rating: {item.rating}</label>
-            <label>Price: {item.price}</label>
-            <label>Author: {item.author}</label>
-            <RatingComponent rating={2.5}></RatingComponent>
+            <div
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "small",
+                color: "#676767",
+              }}
+            >
+              <label className="truncate">
+                <span style={{ fontWeight: "bold" }}>Title : </span>
+                <span>{item.title}</span>
+              </label>
+              <label className="truncate">
+                <span style={{ fontWeight: "bold" }}>Rating : </span>{" "}
+                {item.rating}
+              </label>
+              <label className="truncate">
+                <span style={{ fontWeight: "bold" }}>Price : </span>{" "}
+                <span style={{ color: "#d51912" }}> ₹{item.price}</span>{" "}
+              </label>
+              <label className="truncate">
+                <span style={{ fontWeight: "bold" }}>Author : </span>{" "}
+                <span style={{ color: "blue" }}>{item.author}</span>
+              </label>
+              <RatingComponent rating={item.rating} ratings={item.ratings}></RatingComponent>
+            </div>
             <div
               style={{
                 display: "flex",
