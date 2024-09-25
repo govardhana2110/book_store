@@ -1,0 +1,29 @@
+input {
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  input:focus {
+    border-color: #5a9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  input:hover {
+    border-color: #7ac;
+  }
+  
+  input::placeholder {
+    color: #999;
+    font-style: italic;
+  }
+  
+  input:active {
+    background-color: #f5f5f5;
+  }
+  

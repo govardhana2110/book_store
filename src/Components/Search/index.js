@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InputComponent from "../Input";
 
 const SearchComponent = ({ data, filteredCallBack }) => {
   const [searchValue, setSearchvalue] = useState("");
@@ -40,10 +41,14 @@ const SearchComponent = ({ data, filteredCallBack }) => {
   };
 
   return (
-    <input
+    // <input
+    //   onChange={(e) => inputChange(e.target.value)}
+    //   placeholder="Search..."
+    // ></input>
+    <InputComponent
       onChange={(e) => inputChange(e.target.value)}
       placeholder="Search..."
-    ></input>
+    ></InputComponent>
   );
 };
 

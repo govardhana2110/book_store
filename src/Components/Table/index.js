@@ -1,7 +1,7 @@
 import React from "react";
 import "./table.css";
 
-const TableComponent = ({ data }) => {
+const TableComponent = ({ data, editClick, deleteClick }) => {
   return (
     <table className="responsive-table">
       <thead>
@@ -11,7 +11,7 @@ const TableComponent = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item,index) => (
+        {data.map((item, index) => (
           <tr key={index}>
             {Object.keys(item).map((keys) => (
               <td className="truncate" key={item[keys]}>
@@ -22,9 +22,9 @@ const TableComponent = ({ data }) => {
                 )}
               </td>
             ))}
-            <td>
-              <button>Edit</button>
-              <button>Delete</button>
+            <td style={{display:'flex',gap:'5px',justifyContent:'center'}}>
+              <button onClick={() => editClick(index)}>Edit</button>
+              <button onClick={() => deleteClick(index)}>Delete</button>
             </td>
           </tr>
         ))}

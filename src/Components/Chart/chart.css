@@ -1,0 +1,50 @@
+/* Styles for the chart container */
+.chart-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for the canvas to make it responsive */
+  canvas {
+    display: block;
+    max-width: 100%;
+    height: auto !important;
+  }
+  
+  /* Add some padding for visual balance */
+  canvas + canvas {
+    margin-top: 20px;
+  }
+  
+  /* Customize chart tooltips */
+  .chartjs-tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Add hover effects for better interactivity */
+  canvas:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Legend custom styling */
+  .chart-legend {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .chart-legend li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  

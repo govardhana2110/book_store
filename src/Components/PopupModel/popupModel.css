@@ -22,16 +22,17 @@
   display: flex;
   position: relative; /* Positioned relative to the blurred background */
   justify-content: center;
-  width: 500px;
-  padding: 20px;
-  min-height: fit-content;
+  width: fit-content!;
+  padding: 2rem;
   z-index: 1000000;
   flex-wrap: wrap;
   top: 20px;
   word-wrap: break-word; /* Ensure long words or URLs wrap */
   overflow-wrap: break-word; /* Prevent overflow */
-  overflow: hidden; /* Ensure content stays within bounds */
+  overflow:auto; /* Ensure content stays within bounds */
   text-align: center;
+  max-width: 500px;
+  max-height: 400px;
 }
 
 /* Media Queries for Responsive Behavior */

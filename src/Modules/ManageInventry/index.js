@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import TableComponent from "../../Components/Table";
 import HeaderComponent from "../../Components/Header";
+import ModelPopupComponent from "../../Components/PopupModel";
+import AddEditBookComponent from "../AddEditBook";
+import ConfirmationComponent from "../../Components/Confirmation";
 
 const ManageInventryComponent = () => {
   const booksData = [
@@ -77,12 +80,76 @@ const ManageInventryComponent = () => {
       ratings: "480",
     },
   ];
+  const [showPopup, setShowPopup] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState();
+  const [editId, setEditId] = useState();
+  const [addEditFlag, setAddEditFalg] = useState("Add");
+  const onAddClick = () => {
+    setShowPopup(true);
+    setAddEditFalg("Add");
+  };
+  const editClick = (id) => {
+    setEditId(id);
+    setShowPopup(true);
+    setAddEditFalg("Edit");
+  };
+  const deleteClick = (id) => {
+    setDeleteConfirmation(true);
+    setDeleteIndex(id);
+  };
+  const onCloseClick = () => {
+    setShowPopup(false);
+  };
+  const onYesClick = (id) => {};
+  const onNoClick = () => {
+    setDeleteConfirmation(false);
+  };
+  const onCloseConfirmClick = () => {
+    setDeleteConfirmation(false);
+  };
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <h6 style={{ color: "black", paddingTop: "2rem" }}>Manage Inventry</h6>
-      <button>Add Book</button>
-      <TableComponent data={booksData}></TableComponent>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          color: "black",
+          paddingTop: "4rem",
+          width: "90%",
+        }}
+      >
+        {" "}
+        <span>Manage Inventry</span>
+        <button onClick={() => onAddClick()}>Add Book</button>
+      </div>
+      <div style={{ width: "90%" }}>
+        {" "}
+        <TableComponent
+          data={booksData}
+          editClick={editClick}
+          deleteClick={deleteClick}
+        ></TableComponent>
+      </div>
+      {showPopup && (
+        <ModelPopupComponent onCloseClick={onCloseClick}>
+          <AddEditBookComponent
+            data={booksData[editId]}
+            title={addEditFlag}
+          ></AddEditBookComponent>
+        </ModelPopupComponent>
+      )}
+      {deleteConfirmation && (
+        <ConfirmationComponent
+          title="Are you sure? you want to delete this record..?"
+          id={deleteIndex}
+          onCloseConfirmClick={() => onCloseConfirmClick()}
+          onYesClick={onYesClick}
+          onNoClick={onNoClick}
+        ></ConfirmationComponent>
+      )}
     </>
   );
 };

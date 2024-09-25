@@ -10,7 +10,7 @@ const OrderHistoryComponent = () => {
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <div style={{ color: "black" }}>
+      <div style={{ color: "black" ,position:'absolute',top:'0%'}}>
         <h6 style={{ paddingTop: "3rem" }}>Order Histoty</h6>
         <div className="backGroundCard">
           {storeData.cartItems &&

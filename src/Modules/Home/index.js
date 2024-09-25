@@ -126,7 +126,7 @@ const HomeComponent = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "0 7rem 0rem 7rem",
+            padding: "0 8rem 0rem 8rem",
             flexWrap: "wrap",
             color: "black",
           }}
