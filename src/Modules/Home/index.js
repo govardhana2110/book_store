@@ -9,6 +9,7 @@ import ModelPopupComponent from "../../Components/PopupModel";
 import PaginationComponent from "../../Components/Pagination";
 import ViewBookComponent from "../../Components/ViewBook";
 import SearchComponent from "../../Components/Search";
+import DropdownComponent from "../../Components/Dropdown";
 
 const HomeComponent = () => {
   const books = [
@@ -85,6 +86,13 @@ const HomeComponent = () => {
       ratings: "480",
     },
   ];
+  const categories = [
+    { name: "Funny", value: "funny" },
+    { name: "Crime", value: "crime" },
+    { name: "Thriller", value: "thriller" },
+    { name: "Horror", value: "horror" },
+    { name: "History", value: "history" },
+  ];
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState({});
   const dispatch = useDispatch();
@@ -92,7 +100,9 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const [booksdata, setBooksData] = useState([...books]);
   const addToCartClick = (id) => {
-    dispatch(setCartItems(books[id]));
+    let data = [...storeData.cartItems, books[id]];
+    console.log(data);
+    dispatch(setCartItems(data));
   };
   const buyNowClick = (id) => {
     dispatch(setCartItems(books[id]));
@@ -110,22 +120,34 @@ const HomeComponent = () => {
   };
   return (
     <>
-      <div>
-        <HeaderComponent></HeaderComponent>
-        <div style={{ paddingTop: "4rem" }}>
+      <HeaderComponent></HeaderComponent>
+      <div style={{ paddingTop: "4rem" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "0 7rem 0rem 7rem",
+            flexWrap: "wrap",
+            color: "black",
+          }}
+        >
           <SearchComponent
             data={books}
             filteredCallBack={filteredCallBack}
-          ></SearchComponent>{" "}
-          <BookCardComponent
-            data={booksdata}
-            addToCartClick={addToCartClick}
-            buyNowClick={buyNowClick}
-            onCardClick={onCardClick}
-          ></BookCardComponent>
+          ></SearchComponent>
+          <label>
+            Sort By <DropdownComponent options={categories}></DropdownComponent>
+          </label>
         </div>
-        <PaginationComponent data={booksdata}></PaginationComponent>
+        <BookCardComponent
+          data={booksdata}
+          addToCartClick={addToCartClick}
+          buyNowClick={buyNowClick}
+          onCardClick={onCardClick}
+        ></BookCardComponent>
       </div>
+      <PaginationComponent data={booksdata} />
+
       {showPopup && (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           <ModelPopupComponent onCloseClick={() => onCloseClick()}>

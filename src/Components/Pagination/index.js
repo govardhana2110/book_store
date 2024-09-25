@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
 import DropdownComponent from "../Dropdown";
+
 const PaginationComponent = ({ data }) => {
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [selectedPage, setSelectedPage] = useState(1);

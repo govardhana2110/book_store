@@ -4,7 +4,7 @@ const DropdownComponent = ({options}) => {
   return (
     <select>
       {options && options.map((item) => (
-        <option>{item.name}</option>
+        <option key={item.name}>{item.name}</option>
       ))}
     </select>
   );

@@ -34,7 +34,7 @@ const LoginComponent = () => {
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <div className="backGroundCard">
+      <div className="loginGroundCard">
         <form onSubmit={(e) => loginClick(e)}>
           <div
             style={{

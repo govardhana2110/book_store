@@ -20,6 +20,7 @@ const BookCardComponent = ({
             className="bookCard"
             id="card"
             onClick={(e) => cardClick(e, index)}
+            key={index}
           >
             {" "}
             <div style={{ display: "flex", justifyContent: "center" }}>

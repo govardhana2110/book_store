@@ -24,7 +24,15 @@ const RatingComponent = ({ rating, ratings }) => {
       }}
     >
       <div className="starDiv">{stars}</div>
-      <div style={{ display: "flex", flexDirection: "row",alignContent:'center' }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignContent: "center",
+          fontSize: "small",
+          alignItems: "center",
+        }}
+      >
         {" "}
         <div
           style={{
@@ -39,7 +47,8 @@ const RatingComponent = ({ rating, ratings }) => {
         >
           {rating}
           <div className="star"></div>
-        </div>&nbsp;
+        </div>
+        &nbsp;
         <div>( {ratings})</div>
       </div>
     </div>

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import HeaderComponent from "../../Components/Header";
 import "./checkOut.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RatingComponent from "../../Components/Rating";
 import ModelPopupComponent from "../../Components/PopupModel";
+import { setCartItems } from "../../Store/CartItems";
 
 const CheckOutComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
+  const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState(false);
   const onBuyClick = () => {
     setShowPopup(true);
@@ -14,14 +16,27 @@ const CheckOutComponent = () => {
   const onCloseClick = () => {
     setShowPopup(false);
   };
+  const onRemoveClick = (id) => {
+    var storeArr = [...storeData.cartItems];
+    storeArr.splice(id, 1);
+    dispatch(setCartItems(storeArr));
+  };
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <div style={{ color: "black" }}>
+      <div
+        style={{
+          color: "black",
+          display: "flex",
+          flexDirection: "column",
+          position: "absolute",
+          top: "0%",
+        }}
+      >
         <h6 style={{ paddingTop: "3rem" }}>My Shopping cart</h6>
         <div className="backGroundCard">
           {storeData.cartItems &&
-            storeData.cartItems.map((item) => (
+            storeData.cartItems.map((item, index) => (
               <div
                 style={{
                   display: "flex",
@@ -50,6 +65,9 @@ const CheckOutComponent = () => {
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "space-between",
+                      fontSize: "smaller",
+                      alignItems: "center",
+                      flexWrap: "wrap",
                     }}
                   >
                     <div>
@@ -63,7 +81,7 @@ const CheckOutComponent = () => {
                     ></RatingComponent>
 
                     <label>Total Price :₹{item.price}</label>
-                    <button>Remove</button>
+                    <button onClick={() => onRemoveClick(index)}>Remove</button>
                   </div>
                 </div>
               </div>
