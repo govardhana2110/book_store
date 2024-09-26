@@ -1,0 +1,57 @@
+/* Toaster container */
+.toast-container {
+  position: fixed;
+  z-index: 1000;
+  bottom: 20px;
+}
+
+/* Toast notification style */
+.dangerToast {
+  background-color: #f44336; /* Red background for error */
+  color: white;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.warningToast {
+  background-color: orange; /* Red background for error */
+  color: white;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.successToast {
+  background-color: green; /* Red background for error */
+  color: white;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Close button */
+.toast .close-btn {
+  margin-left: auto;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}

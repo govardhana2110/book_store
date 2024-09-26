@@ -35,7 +35,6 @@ const RegisterComponent = () => {
 
   const registerClick = async (e) => {
     e.preventDefault();
-    console.log(registerDetails);
     try {
       const response = await registerService(registerDetails);
       console.log(response);
@@ -47,7 +46,7 @@ const RegisterComponent = () => {
     navigate("/login");
   };
   return (
-    <div className="backGroundCard">
+    <div className="registerBackGroundCard">
       <form onSubmit={(e) => registerClick(e)}>
         <div
           style={{
@@ -62,11 +61,33 @@ const RegisterComponent = () => {
           >
             Register
           </label>
-          {renderInput("userName", "text")}
-          <DropdownComponent options={userTypes}></DropdownComponent>
-          {renderInput("phone", "number")}
-          {renderInput("email", "text")}
-          {renderInput("password", "password")}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              {renderInput("userName", "text")}
+              <DropdownComponent
+                options={userTypes}
+                placeHolder="Select"
+              ></DropdownComponent>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              {renderInput("phone", "number")}
+              {renderInput("email", "text")}
+            </div>
+            {renderInput("password", "password")}
+          </div>
+
           <div>
             <button
               type="submit"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "../../Components/Header";
 import "./checkOut.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,8 @@ import { setCartItems } from "../../Store/CartItems";
 const CheckOutComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
   const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const onBuyClick = () => {
     setShowPopup(true);
@@ -21,6 +23,40 @@ const CheckOutComponent = () => {
     storeArr.splice(id, 1);
     dispatch(setCartItems(storeArr));
   };
+  const onQuantityReduce = (ind) => {
+    let dataArr = [...storeData.cartItems];
+    const itemIndex = dataArr.findIndex((item) => item.id === ind);
+    if (dataArr[itemIndex].quantity > 1) {
+      let updatedItem = {
+        ...dataArr[itemIndex],
+        quantity: dataArr[itemIndex].quantity - 1,
+      };
+
+      dataArr[itemIndex] = updatedItem;
+    }
+    dispatch(setCartItems(dataArr));
+  };
+  const onQuantityIncrease = (ind) => {
+    let dataArr = [...storeData.cartItems];
+    const itemIndex = dataArr.findIndex((item) => item.id === ind);
+    let updatedItem = {
+      ...dataArr[itemIndex],
+      quantity: dataArr[itemIndex].quantity + 1,
+    };
+    dataArr[itemIndex] = updatedItem;
+
+    dispatch(setCartItems(dataArr));
+  };
+  useEffect(() => {
+    var price = 0;
+    var items = 0;
+    storeData.cartItems.map((item) => {
+      price = price + item.price * item.quantity;
+      items = items + item.quantity;
+    });
+    setTotalPrice(price);
+    setTotalItems(items);
+  }, [storeData]);
   return (
     <>
       <HeaderComponent></HeaderComponent>
@@ -72,20 +108,23 @@ const CheckOutComponent = () => {
                     }}
                   >
                     <div>
-                      <button>-</button>
-                      <span></span>
-                      <button>+</button>
+                      <button onClick={() => onQuantityReduce(item.id)}>
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button onClick={() => onQuantityIncrease(item.id)}>
+                        +
+                      </button>
                     </div>
                     <RatingComponent
                       rating={item.rating}
                       ratings={item.ratings}
                     ></RatingComponent>
 
-                    <label>Total Price :₹{item.price}</label>
+                    <label>Total Price :₹{item.price * item.quantity}</label>
                     <button onClick={() => onRemoveClick(index)}>Remove</button>
                   </div>
                   <hr style={{ color: "black", width: "100%" }}></hr>
-
                 </div>
               </div>
             ))}
@@ -98,15 +137,24 @@ const CheckOutComponent = () => {
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <label>Total Items:{}</label>
-              <label>Total Gross:₹{}</label>
+              <label>Total Items:{totalItems}</label>
+              <label>Total Gross:₹{totalPrice}</label>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               {" "}
-              <label>Delivery Charges:₹{}</label>
-              <label>CGST(18%):₹{}</label>
-              <label>SGST(18%):₹{}</label>
-              <label>Amount Payable:₹{}</label>
+              <label>
+                Delivery Charges:₹{storeData.cartItems.length ? 43.6 : 0}
+              </label>
+              <label>CGST(18%):₹{(0.18 * totalPrice).toFixed(2)}</label>
+              <label>SGST(18%):₹{(0.18 * totalPrice).toFixed(2)}</label>
+              <label>
+                Amount Payable:₹
+                {(
+                  totalPrice +
+                  0.18 * totalPrice * 2 +
+                  (storeData.cartItems.length ? 43.6 : 0)
+                ).toFixed(2)}
+              </label>
               <button onClick={() => onBuyClick()}>Buy</button>
             </div>
           </div>

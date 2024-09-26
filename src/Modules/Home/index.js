@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BookCardComponent from "../../Components/BookCard";
 import HeaderComponent from "../../Components/Header";
 import FooterComponent from "../../Components/Footer";
@@ -10,82 +10,9 @@ import PaginationComponent from "../../Components/Pagination";
 import ViewBookComponent from "../../Components/ViewBook";
 import SearchComponent from "../../Components/Search";
 import DropdownComponent from "../../Components/Dropdown";
+import getAllBooksService from "../../Lib/Services/GetAllBooks";
 
 const HomeComponent = () => {
-  const books = [
-    {
-      title: "Book 1",
-      rating: "4.3",
-      price: "502",
-      author: "Me and someone jhskdgf sdfhgsdf sdkjfhsdkjf ksjdhf sdfkj kjh",
-      image: "images/book image.jpg",
-      ratings: "400",
-    },
-    {
-      title: "Book 3",
-      rating: "4.2",
-      price: "505",
-      author: "som eone",
-      image: "images/book image.jpg",
-      ratings: "408",
-    },
-    {
-      title: "Book jhadf",
-      rating: "4.6",
-      price: "50876",
-      author: "Me and also",
-      image: "images/book image.jpg",
-      ratings: "490",
-    },
-    {
-      title: "Book 8",
-      rating: "4.9",
-      price: "5087687",
-      author: "every one",
-      image: "images/book image.jpg",
-      ratings: "404",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "460",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "430",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "4090",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "40390",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "480",
-    },
-  ];
   const categories = [
     { name: "Funny", value: "funny" },
     { name: "Crime", value: "crime" },
@@ -98,18 +25,47 @@ const HomeComponent = () => {
   const dispatch = useDispatch();
   const storeData = useSelector((state) => state.cartItems);
   const navigate = useNavigate();
-  const [booksdata, setBooksData] = useState([...books]);
-  const addToCartClick = (id) => {
-    let data = [...storeData.cartItems, books[id]];
-    console.log(data);
-    dispatch(setCartItems(data));
+  const [booksdata, setBooksData] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
+  useEffect(() => {
+    getBooksData();
+  }, []);
+  const getBooksData = async () => {
+    try {
+      const response = await getAllBooksService();
+      setBooksData(response.data);
+      setAllBooks(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
+  const addToCartClick = (ind) => {
+    let dataArr = [...storeData.cartItems]; 
+      const existingItemIndex = dataArr.findIndex(
+      (item) => item.id === booksdata[ind].id
+    );
+    if (existingItemIndex !== -1) {
+      let updatedItem = {
+        ...dataArr[existingItemIndex],
+        quantity: dataArr[existingItemIndex].quantity + 1,
+      };
+      dataArr[existingItemIndex] = updatedItem;
+    } else {
+      let newItem = {
+        ...booksdata[ind],
+        quantity: 1,
+      };
+      dataArr = [...dataArr, newItem];
+    }
+    dispatch(setCartItems(dataArr));
+  };
+  
   const buyNowClick = (id) => {
-    dispatch(setCartItems(books[id]));
+    dispatch(setCartItems(booksdata[id]));
     navigate("/checkOut");
   };
   const onCardClick = (id) => {
-    setPopupData(books[id]);
+    setPopupData(booksdata[id]);
     setShowPopup(true);
   };
   const onCloseClick = () => {
@@ -129,16 +85,18 @@ const HomeComponent = () => {
             padding: "0 8rem 0rem 8rem",
             flexWrap: "wrap",
             color: "black",
-            minWidth:'80vw'
           }}
         >
           <SearchComponent
-            data={books}
+            data={allBooks}
             filteredCallBack={filteredCallBack}
           ></SearchComponent>
-          <label>
-            Sort By <DropdownComponent options={categories}></DropdownComponent>
-          </label>
+          <div style={{ width: "fit-content" }}>
+            <DropdownComponent
+              options={categories}
+              placeHolder="Sort by..."
+            ></DropdownComponent>
+          </div>
         </div>
         <BookCardComponent
           data={booksdata}

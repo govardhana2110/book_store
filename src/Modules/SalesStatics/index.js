@@ -24,14 +24,14 @@ const SalesStaticsComponent = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-around",
               flexDirection: "column",
             }}
           >
             <div
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "space-around",
                 flexDirection: "row",
               }}
             >
@@ -71,7 +71,7 @@ const SalesStaticsComponent = () => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "space-around",
                 flexDirection: "row",
               }}
             >

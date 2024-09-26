@@ -1,9 +1,9 @@
 import request from "../CommonService";
 
-const loginService = () => {
+const getAllBooksService = () => {
   return request({
-    url: "users",
+    url: "books",
     method: "GET",
   });
 };
-export default loginService;
+export default getAllBooksService;

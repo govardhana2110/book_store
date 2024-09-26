@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: process.env.URL,
+    baseURL: process.env.REACT_APP_JSON_URL,
     validateStatus: (status) => { return status >= 200 && status < 300 }
 })
 

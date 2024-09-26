@@ -1,5 +1,6 @@
 import React from "react";
 import "./viewBook.css";
+import RatingComponent from "../Rating";
 
 const ViewBookComponent = ({ book }) => {
   return (
@@ -13,10 +14,29 @@ const ViewBookComponent = ({ book }) => {
         }}
       >
         <img src={book.image} alt="#" height={200} width={150}></img>
-
-        <div> {book.title} uyqwire ywieuyw uioeer ytiuperp tieuri</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: "1rem",
+            textAlign:'left',
+            alignItems:'flex-start'
+          }}
+        >
+          <div> {book.title}</div>
+          <div>By:{book.author}</div>
+          <div>Price:₹{book.price}</div>
+          <div>Rating:{book.rating}</div>
+          <div>
+            <RatingComponent
+              rating={book.rating}
+              ratings={book.ratings}
+            ></RatingComponent>
+          </div>
+        </div>
       </div>
-      <div> Bottom Div</div>
+      <div>Description: {book.description}</div>
     </div>
   );
 };

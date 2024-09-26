@@ -19,7 +19,7 @@ const PaginationComponent = ({ data }) => {
   }, []);
   return (
     <div className="mainDiv">
-      Records per page <DropdownComponent options={records}></DropdownComponent>
+      Records per page <DropdownComponent options={records} placeHolder=''></DropdownComponent>
       {Array.from({length:totalPages.length}).map}
     </div>
   );
