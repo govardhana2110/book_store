@@ -94,7 +94,7 @@ const CheckOutComponent = () => {
                 >
                   <label>{item.title}</label>
                   <label>By:{item.author}</label>
-                  <label>Description:</label>
+                  <label>Description:{item.description}</label>
                   <label>₹{item.price}</label>
 
                   <div
@@ -107,7 +107,14 @@ const CheckOutComponent = () => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        gap: "0.2rem",
+                      }}
+                    >
                       <button onClick={() => onQuantityReduce(item.id)}>
                         -
                       </button>

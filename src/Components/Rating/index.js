@@ -49,7 +49,7 @@ const RatingComponent = ({ rating, ratings }) => {
           <div className="star"></div>
         </div>
         &nbsp;
-        <div>( {ratings})</div>
+        <div>({ratings})</div>
       </div>
     </div>
   );

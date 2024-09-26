@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "../../Components/Header";
 import RatingComponent from "../../Components/Rating";
 import { useSelector } from "react-redux";
 import "./orderHistory.css";
+import getOrderHistoryService from "../../Lib/Services/OrderHistory";
 
 const OrderHistoryComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
-
+  const [orderHistory, setOrderHistory] = useState([]);
+  const getOrderHistory = async () => {
+    try {
+      const response = await getOrderHistoryService();
+      setOrderHistory(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getOrderHistory();
+  }, []);
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <div style={{ color: "black" ,position:'absolute',top:'0%'}}>
+      <div style={{ color: "black", position: "absolute", top: "0%" }}>
         <h6 style={{ paddingTop: "3rem" }}>Order Histoty</h6>
         <div className="backGroundCard">
-          {storeData.cartItems &&
-            storeData.cartItems.map((item) => (
+          {orderHistory &&
+            orderHistory.map((item) => (
               <>
                 <div
                   style={{

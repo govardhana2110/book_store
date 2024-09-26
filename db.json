@@ -63,19 +63,6 @@
       "status": "available",
       "quantity": 1,
       "description": "Some description"
-    },
-    {
-      "id": 3,
-      "title": "Book 3",
-      "rating": "4.8",
-      "price": "5023",
-      "author": "Me and ",
-      "image": "images/book image.jpg",
-      "ratings": "400",
-      "category": "crime",
-      "status": "available",
-      "quantity": 1,
-      "description": "Some description"
     }
   ],
   "users": [
@@ -92,5 +79,32 @@
       "role": "user"
     }
   ],
-  "orderHistory": []
+  "orderHistory": [
+    {
+      "id": 1,
+      "title": "Book 1",
+      "rating": "4.3",
+      "price": "502",
+      "author": "Me and someone jhskdgf sdfhgsdf sdkjfhsdkjf ksjdhf sdfkj kjh",
+      "image": "images/book image.jpg",
+      "ratings": "400",
+      "category": "crime",
+      "status": "available",
+      "quantity": 1,
+      "description": "Some description"
+    },
+    {
+      "id": 2,
+      "title": "Book 2",
+      "rating": "4.5",
+      "price": "5066",
+      "author": "Me and someoneh",
+      "image": "images/book image.jpg",
+      "ratings": "400",
+      "category": "crime",
+      "status": "available",
+      "quantity": 1,
+      "description": "Some description"
+    }
+  ]
 }
