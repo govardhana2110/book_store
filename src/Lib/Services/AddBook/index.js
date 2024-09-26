@@ -1,10 +1,10 @@
 import request from "../CommonService";
 
-const registerService = (data) => {
+const addBookService = (data) => {
   return request({
-    url: "users",
+    url: "books",
     method: "POST",
     data: { ...data },
   });
 };
-export default registerService;
+export default addBookService;

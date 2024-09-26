@@ -1,10 +1,10 @@
 import request from "../CommonService";
 
-const registerService = (data) => {
+const placeOrderService = (data) => {
   return request({
-    url: "users",
+    url: "orderHistory",
     method: "POST",
     data: { ...data },
   });
 };
-export default registerService;
+export default placeOrderService;

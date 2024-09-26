@@ -1,90 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableComponent from "../../Components/Table";
 import HeaderComponent from "../../Components/Header";
 import ModelPopupComponent from "../../Components/PopupModel";
 import AddEditBookComponent from "../AddEditBook";
 import ConfirmationComponent from "../../Components/Confirmation";
+import getAllBooksService from "../../Lib/Services/GetAllBooks";
 
 const ManageInventryComponent = () => {
-  const booksData = [
-    {
-      title: "Book 1",
-      rating: "4.3",
-      price: "502",
-      author: "Me and someone jhskdgf sdfhgsdf sdkjfhsdkjf ksjdhf sdfkj kjh",
-      image: "images/book image.jpg",
-      ratings: "400",
-    },
-    {
-      title: "Book 3",
-      rating: "4.2",
-      price: "505",
-      author: "som eone",
-      image: "images/book image.jpg",
-      ratings: "408",
-    },
-    {
-      title: "Book jhadf",
-      rating: "4.6",
-      price: "50876",
-      author: "Me and also",
-      image: "images/book image.jpg",
-      ratings: "490",
-    },
-    {
-      title: "Book 8",
-      rating: "4.9",
-      price: "5087687",
-      author: "every one",
-      image: "images/book image.jpg",
-      ratings: "404",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "460",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "430",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "4090",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "40390",
-    },
-    {
-      title: "Book",
-      rating: "4",
-      price: "50",
-      author: "Me",
-      image: "images/book image.jpg",
-      ratings: "480",
-    },
-  ];
+  const [booksData, setBooksData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState();
   const [editId, setEditId] = useState();
   const [addEditFlag, setAddEditFalg] = useState("Add");
+
+  useEffect(() => {
+    getBooksData();
+  }, []);
+  const getBooksData = async () => {
+    try {
+      const response = await getAllBooksService();
+      setBooksData(response.data);
+      console.log(response.data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onAddClick = () => {
     setShowPopup(true);
     setAddEditFalg("Add");

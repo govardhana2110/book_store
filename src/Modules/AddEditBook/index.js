@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import InputComponent from "../../Components/Input";
 import ButtonComponent from "../../Components/Button";
+import addBookService from "../../Lib/Services/AddBook";
+import updateBookService from "../../Lib/Services/UpdateBook";
 
 const AddEditBookComponent = ({ data, title }) => {
   const [editedData, setEditedData] = useState({});
@@ -12,6 +14,10 @@ const AddEditBookComponent = ({ data, title }) => {
       rating: "",
       image: "",
       ratings: "",
+      category: "",
+      status: "",
+      description: "",
+      id: "4",
     };
     if (data && title === "Edit") {
       obj = {
@@ -21,6 +27,10 @@ const AddEditBookComponent = ({ data, title }) => {
         rating: data.rating || "",
         image: data.image || "",
         ratings: data.ratings || "",
+        category: "",
+        status: "",
+        description: "",
+        id: data.id || "",
       };
     }
     setEditedData(obj);
@@ -38,8 +48,16 @@ const AddEditBookComponent = ({ data, title }) => {
   const inputChange = (name, e) => {
     setEditedData((prev) => ({ ...prev, [name]: e.target.value }));
   };
-  const submitClick = () => {
-    console.log("submitted");
+  const submitClick = async () => {
+    try {
+      const response =
+        title === "Add"
+          ? await addBookService(editedData)
+          : await updateBookService(editedData, editedData.id);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div>

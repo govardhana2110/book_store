@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Book 1",
       "rating": "4.3",
       "price": "502",
@@ -13,7 +13,7 @@
       "description": "Some description"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Book 2",
       "rating": "4.5",
       "price": "5066",
@@ -25,21 +25,24 @@
       "description": "Some description"
     },
     {
-      "id": 3,
-      "title": "Book 3",
-      "rating": "4.8",
-      "price": "5023",
-      "author": "Me and ",
-      "image": "images/book image.jpg",
-      "ratings": "400",
-      "category": "history",
-      "status": "out of stock",
-      "description": "Some description"
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "title": "Book4",
+      "author": "friends",
+      "price": "6078",
+      "rating": "3.6",
+      "image": "",
+      "ratings": "789",
+      "category": "",
+      "status": "",
+      "description": ""
     }
   ],
   "cartItems": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Book 1",
       "rating": "4.3",
       "price": "502",
@@ -52,7 +55,7 @@
       "description": "Some description"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Book 2",
       "rating": "4.5",
       "price": "5066",
@@ -67,13 +70,13 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "userName": "user1",
       "password": "123456",
       "role": "admin"
     },
     {
-      "id": 2,
+      "id": "2",
       "userName": "user2",
       "password": "123456",
       "role": "user"
@@ -81,7 +84,7 @@
   ],
   "orderHistory": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Book 1",
       "rating": "4.3",
       "price": "502",
@@ -94,7 +97,7 @@
       "description": "Some description"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Book 2",
       "rating": "4.5",
       "price": "5066",
