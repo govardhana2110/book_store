@@ -34,6 +34,7 @@
     rgba(113, 234, 255, 0.2) 97.11%
   ); */
   /* background-image: "../public/images/star_2.svg"; */
+  /* background-image: url('/images/star_2.svg'); */
   min-height: 100vh;
   min-width: 100vw;
   display: flex;

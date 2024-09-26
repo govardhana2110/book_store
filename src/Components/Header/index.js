@@ -113,18 +113,21 @@ const HeaderComponent = () => {
           >
             Order History
           </label>
+          <hr style={{ color: "black", width: "100%" }}></hr>
           <label
             style={{ cursor: "pointer" }}
             onClick={() => onClick("/manageInventry")}
           >
             Manage Inventry
           </label>
+          <hr style={{ color: "black", width: "100%" }}></hr>
           <label
             style={{ cursor: "pointer" }}
             onClick={() => onClick("/salesStatistics")}
           >
-           Sales Statistics
+            Sales Statistics
           </label>
+          <hr style={{ color: "black", width: "100%" }}></hr>
           <label style={{ cursor: "pointer" }} onClick={() => logoutClick()}>
             Logout
           </label>

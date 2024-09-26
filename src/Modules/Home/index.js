@@ -129,6 +129,7 @@ const HomeComponent = () => {
             padding: "0 8rem 0rem 8rem",
             flexWrap: "wrap",
             color: "black",
+            minWidth:'80vw'
           }}
         >
           <SearchComponent

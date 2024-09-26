@@ -1,15 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import LoginComponent from './Modules/Login';
-import HeaderComponent from './Components/Header';
-import FooterComponent from './Components/Footer';
-import RegisterComponent from './Modules/Register';
 import RoutingModule from './Modules/Routing';
 
 function App() {
   return (
     <div className="App" >
-      <header className="App-header" style={{backgroundImage:'/images/star_2.svg'}}>
+      <header className="App-header" style={{backgroundImage:`url(/images/library.jpg)`}}>
         <RoutingModule></RoutingModule>
         {/* <LoginComponent /> */}
         {/* <RegisterComponent></RegisterComponent> */}

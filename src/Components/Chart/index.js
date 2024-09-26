@@ -14,7 +14,7 @@ import {
   ArcElement,
 } from "chart.js";
 
-const ChartComponent = ({ type, data, labels,height,width }) => {
+const ChartComponent = ({ type, data, labels, height, width }) => {
   Chart.register(
     LinearScale,
     LineController,
@@ -31,21 +31,16 @@ const ChartComponent = ({ type, data, labels,height,width }) => {
     Legend
   );
 
-  const lineChartRef = useRef(null);
-  const barChartRef = useRef(null);
-  const pieChartRef = useRef(null);
-  const doughnutChartRef = useRef(null);
-  let myLineChart;
-  let myBarChart;
-  let myPieChart;
-  let myDoughnutChart;
+  const chartRef = useRef(null);
+
+  let chartElement;
 
   const lineChart = () => {
-    const ctx = lineChartRef.current.getContext("2d");
-    if (myLineChart) {
-      myLineChart.destroy();
+    const ctx = chartRef.current.getContext("2d");
+    if (chartElement) {
+      chartElement.destroy();
     }
-    myLineChart = new Chart(ctx, {
+    chartElement = new Chart(ctx, {
       type: "line",
       data: {
         labels: [...labels],
@@ -68,11 +63,11 @@ const ChartComponent = ({ type, data, labels,height,width }) => {
     });
   };
   const barChart = () => {
-    const ctx = lineChartRef.current.getContext("2d");
-    if (myLineChart) {
-      myLineChart.destroy();
+    const ctx = chartRef.current.getContext("2d");
+    if (chartElement) {
+      chartElement.destroy();
     }
-    myLineChart = new Chart(ctx, {
+    chartElement = new Chart(ctx, {
       type: "bar",
       data: {
         labels: [...labels],
@@ -95,11 +90,11 @@ const ChartComponent = ({ type, data, labels,height,width }) => {
     });
   };
   const pieChart = () => {
-    const ctx = lineChartRef.current.getContext("2d");
-    if (myLineChart) {
-      myLineChart.destroy();
+    const ctx = chartRef.current.getContext("2d");
+    if (chartElement) {
+      chartElement.destroy();
     }
-    myLineChart = new Chart(ctx, {
+    chartElement = new Chart(ctx, {
       type: "pie",
       data: {
         labels: [...labels],
@@ -122,11 +117,11 @@ const ChartComponent = ({ type, data, labels,height,width }) => {
     });
   };
   const doughnutChart = () => {
-    const ctx = lineChartRef.current.getContext("2d");
-    if (myLineChart) {
-      myLineChart.destroy();
+    const ctx = chartRef.current.getContext("2d");
+    if (chartElement) {
+      chartElement.destroy();
     }
-    myLineChart = new Chart(ctx, {
+    chartElement = new Chart(ctx, {
       type: "doughnut",
       data: {
         labels: [...labels],
@@ -164,18 +159,12 @@ const ChartComponent = ({ type, data, labels,height,width }) => {
         lineChart();
     }
     return () => {
-      if (myLineChart) myLineChart.destroy();
-      if (myBarChart) myBarChart.destroy();
-      if (myPieChart) myPieChart.destroy();
-      if (myDoughnutChart) myDoughnutChart.destroy();
+      if (chartElement) chartElement.destroy();
     };
   }, [type]);
   return (
     <div className="chart-container">
-      <canvas ref={lineChartRef} height={height} width={width}></canvas>
-      <canvas ref={barChartRef}></canvas>
-      <canvas ref={pieChartRef}></canvas>
-      <canvas ref={doughnutChartRef}></canvas>
+      <canvas ref={chartRef} height={height} width={width}></canvas>
     </div>
   );
 };

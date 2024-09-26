@@ -60,6 +60,7 @@ const CheckOutComponent = () => {
                   <label>By:{item.author}</label>
                   <label>Description:</label>
                   <label>₹{item.price}</label>
+
                   <div
                     style={{
                       display: "flex",
@@ -83,10 +84,11 @@ const CheckOutComponent = () => {
                     <label>Total Price :₹{item.price}</label>
                     <button onClick={() => onRemoveClick(index)}>Remove</button>
                   </div>
+                  <hr style={{ color: "black", width: "100%" }}></hr>
+
                 </div>
               </div>
             ))}
-          <hr></hr>
           <div
             style={{
               display: "flex",

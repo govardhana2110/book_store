@@ -4,6 +4,7 @@ import "./login.css";
 import loginService from "../../Lib/Services/Login";
 import { useNavigate } from "react-router-dom";
 import HeaderComponent from "../../Components/Header";
+import ButtonComponent from "../../Components/Button";
 
 const LoginComponent = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -64,17 +65,8 @@ const LoginComponent = () => {
               type="password"
             ></InputComponent>
             <div>
-              <button
-                type="submit"
-                style={{
-                  color: "white",
-                  borderRadius: "10%",
-                  background: "blue",
-                  borderColor: "blue",
-                }}
-              >
-                Submit
-              </button>
+             
+              <ButtonComponent type='submit' name='Login'></ButtonComponent>
             </div>
             <label style={{ color: "black", fontSize: "small" }}>
               New user ?{" "}

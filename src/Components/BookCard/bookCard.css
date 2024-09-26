@@ -35,7 +35,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   min-width: 10rem;
   max-width: 8rem;
-  height: 15rem;
+  height: 16rem;
 }
 .bookCard:hover {
   transform: scale(1.05); /* Increase size slightly */
