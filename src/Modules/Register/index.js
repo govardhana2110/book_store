@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "../../Components/Input";
 import "./register.css";
-import registerService from "../../Lib/Services/Login";
 import DropdownComponent from "../../Components/Dropdown";
 import { useNavigate } from "react-router-dom";
+import ButtonComponent from "../../Components/Button";
+import HeaderComponent from "../../Components/Header";
+import loginService from "../../Lib/Services/Login";
+import registerService from "../../Lib/Services/Register";
 
 const RegisterComponent = () => {
   const [registerDetails, setRegisterDetails] = useState({
@@ -11,12 +14,26 @@ const RegisterComponent = () => {
     phone: "",
     userName: "",
     password: "",
-    userType: "",
+    role: null,
+    firstName: "",
+    lastName: "",
   });
   const userTypes = [
     { name: "Admin", value: "admin" },
     { name: "User", value: "user" },
   ];
+  const [usersList, setUsersList] = useState(0);
+  const getUsersList = async () => {
+    try {
+      const response = await loginService();
+      setUsersList(response.data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getUsersList();
+  }, []);
   const navigate = useNavigate();
   const renderInput = (name, type) => {
     return (
@@ -26,6 +43,7 @@ const RegisterComponent = () => {
         placeholder={name}
         onChange={(e) => handleChange(e.target.value, name)}
         type={type}
+        label={name}
       ></InputComponent>
     );
   };
@@ -36,7 +54,11 @@ const RegisterComponent = () => {
   const registerClick = async (e) => {
     e.preventDefault();
     try {
-      const response = await registerService(registerDetails);
+      let obj = {
+        ...registerDetails,
+        id: usersList + 1,
+      };
+      const response = await registerService(obj);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -45,71 +67,95 @@ const RegisterComponent = () => {
   const backToLogin = () => {
     navigate("/login");
   };
+  const onRoleChange = (e) => {
+    setRegisterDetails((prev) => ({ ...prev, role: e.target.value }));
+  };
   return (
-    <div className="registerBackGroundCard">
-      <form onSubmit={(e) => registerClick(e)}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <label
-            style={{ color: "black", fontSize: "larger", fontWeight: "600" }}
-          >
-            Register
-          </label>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+    <>
+      <HeaderComponent></HeaderComponent>
+      <div style={{ paddingTop: "3rem" }}>
+        {" "}
+        <div className="registerBackGroundCard">
+          <form onSubmit={(e) => registerClick(e)}>
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: "1rem",
               }}
             >
-              {renderInput("userName", "text")}
-              <DropdownComponent
-                options={userTypes}
-                placeHolder="Select"
-              ></DropdownComponent>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              {renderInput("phone", "number")}
-              {renderInput("email", "text")}
-            </div>
-            {renderInput("password", "password")}
-          </div>
+              <label
+                style={{
+                  color: "black",
+                  fontSize: "larger",
+                  fontWeight: "600",
+                }}
+              >
+                Register
+              </label>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flexWrap: "wrap",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    gap: "1rem",
+                  }}
+                >
+                  {renderInput("firstName", "text")}
+                  {renderInput("lastName", "text")}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {renderInput("email", "text")}
+                  {renderInput("phone", "number")}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    gap: "1rem",
+                  }}
+                >
+                  {renderInput("userName", "text")}
+                  {renderInput("password", "password")}
+                </div>
+                <DropdownComponent
+                  options={userTypes}
+                  placeHolder="Select"
+                  label="Role"
+                  value={registerDetails.role}
+                  onChange={(e) => onRoleChange(e)}
+                ></DropdownComponent>
+              </div>
 
-          <div>
-            <button
-              type="submit"
-              style={{
-                color: "white",
-                borderRadius: "10%",
-                background: "blue",
-                borderColor: "blue",
-              }}
-            >
-              Register
-            </button>
-          </div>
-          <label style={{ color: "black", fontSize: "small" }}>
-            Back to{" "}
-            <a href="/login" onClick={() => backToLogin()}>
-              Login
-            </a>
-          </label>
+              <div>
+                <ButtonComponent name="Register" type='submit'></ButtonComponent>
+              </div>
+              <label style={{ color: "black", fontSize: "small" }}>
+                Back to{" "}
+                <a href="/login" onClick={() => backToLogin()}>
+                  Login
+                </a>
+              </label>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 export default RegisterComponent;

@@ -53,17 +53,26 @@
     }
   ],
   "users": [
+    
     {
       "id": "1",
-      "userName": "user1",
+      "email": "abc@gmail.com",
+      "phone": "1234567890",
+      "userName": "govardhan",
       "password": "123456",
-      "role": "admin"
+      "role": "admin",
+      "firstName": "Govardhana",
+      "lastName": "Reddy"
     },
     {
       "id": "2",
-      "userName": "user2",
+      "email": "abc@gmail.com",
+      "phone": "1234567890",
+      "userName": "user",
       "password": "123456",
-      "role": "user"
+      "role": "user",
+      "firstName": "user",
+      "lastName": "user"
     }
   ],
   "orderHistory": [

@@ -28,11 +28,12 @@ const LoginComponent = () => {
       const users = response.data;
       const user = users.find(
         (u) =>
-          u.username === loginDetails.username &&
+          u.userName === loginDetails.userName &&
           u.password === loginDetails.password
       );
 
       if (user) {
+        console.log(user);
         localStorage.setItem("authToken", "qwertyuiajndklahsfvgui");
         localStorage.setItem("role", user.role);
         setnotifyType("success");
@@ -53,6 +54,7 @@ const LoginComponent = () => {
   };
   useEffect(() => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("role");
   }, []);
   return (
     <>
@@ -78,6 +80,7 @@ const LoginComponent = () => {
               placeholder="User Name"
               onChange={(e) => handleChange(e.target.value, "userName")}
               type="text"
+              label="User Name"
             ></InputComponent>
             <InputComponent
               value={loginDetails.password}
@@ -85,6 +88,7 @@ const LoginComponent = () => {
               placeholder="Password"
               onChange={(e) => handleChange(e.target.value, "password")}
               type="password"
+              label="Password"
             ></InputComponent>
             <div>
               <ButtonComponent type="submit" name="Login"></ButtonComponent>
