@@ -70,9 +70,9 @@ const OrderHistoryComponent = () => {
                         rating={item.rating}
                         ratings={item.ratings}
                       ></RatingComponent>
-
-                      <label>Total Price :₹{item.price}</label>
-                      <button>Remove</button>
+                      <label>Total Quantity :{item.quantity}</label>
+                      <label>Total Price :₹{item.price * item.quantity}</label>
+                      <label>Status :{item.orderStatus}</label>
                     </div>
                   </div>
                 </div>

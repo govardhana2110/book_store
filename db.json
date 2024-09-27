@@ -39,19 +39,6 @@
   ],
   "cartItems": [
     {
-      "id": "1",
-      "title": "Book 1",
-      "author": "Me and someone jhskdgf sdfhgsdf sdkjfhsdkjf ksjdhf sdfkj kjh",
-      "rating": "4.3",
-      "price": "502",
-      "image": "images/book image.jpg",
-      "ratings": "400",
-      "category": "crime",
-      "status": "available",
-      "quantity": 1,
-      "description": "Some description"
-    },
-    {
       "id": "2",
       "title": "Book 2",
       "author": "Me and someoneh",
@@ -61,7 +48,7 @@
       "ratings": "400",
       "category": "crime",
       "status": "available",
-      "quantity": 1,
+      "quantity": 2,
       "description": "Some description"
     }
   ],
@@ -91,7 +78,8 @@
       "category": "crime",
       "status": "available",
       "quantity": 1,
-      "description": "Some description"
+      "description": "Some description",
+      "orderStatus": "shipped"
     },
     {
       "id": "2",
@@ -103,8 +91,9 @@
       "ratings": "400",
       "category": "crime",
       "status": "available",
-      "quantity": 1,
-      "description": "Some description"
+      "quantity": 2,
+      "description": "Some description",
+      "orderStatus": "placed"
     }
   ]
 }

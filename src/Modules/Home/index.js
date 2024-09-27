@@ -12,6 +12,7 @@ import SearchComponent from "../../Components/Search";
 import DropdownComponent from "../../Components/Dropdown";
 import getAllBooksService from "../../Lib/Services/GetAllBooks";
 import getCartItemsService from "../../Lib/Services/GetCartItems";
+import addCartItemsService from "../../Lib/Services/AddCartItems";
 
 const HomeComponent = () => {
   const categories = [
@@ -31,7 +32,7 @@ const HomeComponent = () => {
   useEffect(() => {
     getBooksData();
   }, []);
- 
+
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
@@ -58,10 +59,19 @@ const HomeComponent = () => {
         quantity: 1,
       };
       dataArr = [...dataArr, newItem];
+      cartItemsChange(newItem);
+
     }
     dispatch(setCartItems(dataArr));
   };
-
+  const cartItemsChange = async (data) => {
+    try {
+      const response = await addCartItemsService(data);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const buyNowClick = (id) => {
     dispatch(setCartItems(booksdata[id]));
     navigate("/checkOut");

@@ -28,6 +28,7 @@ const ViewBookComponent = ({ book }) => {
           <div>By:{book.author}</div>
           <div>Price:₹{book.price}</div>
           <div>Rating:{book.rating}</div>
+          <div>Availability:{book.status}</div>
           <div>
             <RatingComponent
               rating={book.rating}
@@ -36,6 +37,8 @@ const ViewBookComponent = ({ book }) => {
           </div>
         </div>
       </div>
+      <hr  style={{color:'black', width:'100%'}}></hr>
+
       <div>Description: {book.description}</div>
     </div>
   );

@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import RatingComponent from "../../Components/Rating";
 import ModelPopupComponent from "../../Components/PopupModel";
 import { setCartItems } from "../../Store/CartItems";
+import deleteCartItemService from "../../Lib/Services/DeleteCartItem";
+import updateCartItemService from "../../Lib/Services/UpdateCartItems";
+import PaymentCardComponent from "../../Components/PaymentCard";
+import placeOrderService from "../../Lib/Services/PlaceOrder";
 
 const CheckOutComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
@@ -18,10 +22,27 @@ const CheckOutComponent = () => {
   const onCloseClick = () => {
     setShowPopup(false);
   };
-  const onRemoveClick = (id) => {
+  const onRemoveClick = (index) => {
     var storeArr = [...storeData.cartItems];
-    storeArr.splice(id, 1);
+    removeCartItem(storeArr[index]);
+    storeArr.splice(index, 1);
     dispatch(setCartItems(storeArr));
+  };
+  const removeCartItem = async (data) => {
+    try {
+      const response = await deleteCartItemService(data.id);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateCartItems = async (data) => {
+    try {
+      const response = await updateCartItemService(data, data.id);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const onQuantityReduce = (ind) => {
     let dataArr = [...storeData.cartItems];
@@ -33,6 +54,7 @@ const CheckOutComponent = () => {
       };
 
       dataArr[itemIndex] = updatedItem;
+      updateCartItems(dataArr[itemIndex]);
     }
     dispatch(setCartItems(dataArr));
   };
@@ -44,7 +66,7 @@ const CheckOutComponent = () => {
       quantity: dataArr[itemIndex].quantity + 1,
     };
     dataArr[itemIndex] = updatedItem;
-
+    updateCartItems(dataArr[itemIndex]);
     dispatch(setCartItems(dataArr));
   };
   useEffect(() => {
@@ -57,6 +79,19 @@ const CheckOutComponent = () => {
     setTotalPrice(price);
     setTotalItems(items);
   }, [storeData]);
+  const orderSubmitCallBack = async () => {
+    try {
+      let obj = {
+        ...storeData.cartItems[0],
+        orderStatus: "placed",
+      };
+      console.log(obj)
+      const response = await placeOrderService(obj);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <HeaderComponent></HeaderComponent>
@@ -167,9 +202,11 @@ const CheckOutComponent = () => {
           </div>
         </div>
         {showPopup && (
-          <ModelPopupComponent
-            onCloseClick={onCloseClick}
-          ></ModelPopupComponent>
+          <ModelPopupComponent onCloseClick={onCloseClick}>
+            <PaymentCardComponent
+              orderSubmitCallBack={orderSubmitCallBack}
+            ></PaymentCardComponent>
+          </ModelPopupComponent>
         )}
       </div>
     </>

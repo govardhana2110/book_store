@@ -5,10 +5,14 @@ import { useSelector } from "react-redux";
 import "./updateOrders.css";
 import getOrderHistoryService from "../../Lib/Services/OrderHistory";
 import DropdownComponent from "../../Components/Dropdown";
+import ButtonComponent from "../../Components/Button";
+import updateOrderService from "../../Lib/Services/UpdateOrder";
 
 const UpdateOrderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
   const [orderHistory, setOrderHistory] = useState([]);
+  const [orderStatusValue, setOrderStatusValue] = useState(null);
+  const [orderId, setOrderId] = useState(null);
   const orderStatus = [
     { name: "Placed", value: "placed" },
     { name: "Confirmed", value: "confirmed" },
@@ -30,6 +34,21 @@ const UpdateOrderComponent = () => {
   useEffect(() => {
     getOrderHistory();
   }, []);
+  const onOrderUpdateClick = async (data) => {
+    try {
+      const response = await updateOrderService(
+        { ...data, orderStatus: orderStatusValue },
+        data.id
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const onDroDownChange = (e, id) => {
+    setOrderId(id);
+    setOrderStatusValue(e.target.value);
+  };
   return (
     <>
       <HeaderComponent></HeaderComponent>
@@ -37,7 +56,7 @@ const UpdateOrderComponent = () => {
         <h6 style={{ paddingTop: "3rem" }}>Manage Order</h6>
         <div className="backGroundCard">
           {orderHistory &&
-            orderHistory.map((item) => (
+            orderHistory.map((item, index) => (
               <>
                 <div
                   style={{
@@ -81,14 +100,24 @@ const UpdateOrderComponent = () => {
                         rating={item.rating}
                         ratings={item.ratings}
                       ></RatingComponent>
-                      <label>Total Price :₹{item.price}</label>
+                      <label>Total Quantity :₹{item.quantity}</label>
+                      <label>Total Price :₹{item.price * item.quantity}</label>
                       <div>
                         {" "}
                         <DropdownComponent
                           options={orderStatus}
-                          placeHolder="Select"
+                          placeHolder="Select status"
+                          value={
+                            (orderId === index && orderStatusValue) ||
+                            item.orderStatus
+                          }
+                          onChange={(e) => onDroDownChange(e, index)}
                         ></DropdownComponent>{" "}
                       </div>
+                      <ButtonComponent
+                        name="Update"
+                        onClick={() => onOrderUpdateClick(item)}
+                      ></ButtonComponent>
                     </div>
                   </div>
                 </div>

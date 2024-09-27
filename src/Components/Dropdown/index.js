@@ -1,7 +1,7 @@
 import React from "react";
 import "./dropdown.css";
 
-const DropdownComponent = ({ options, placeHolder }) => {
+const DropdownComponent = ({ options, placeHolder,value,onChange }) => {
   const selectElement = document.getElementById("customSelect");
   if (selectElement) {
     selectElement.addEventListener("mousedown", function () {
@@ -13,9 +13,9 @@ const DropdownComponent = ({ options, placeHolder }) => {
     });
   }
   return (
-    <select id="customSelect">
+    <select id="customSelect" value={value} onChange={onChange}>
       {placeHolder && (
-        <option value="" disabled selected>
+        <option value="" disabled>
           {placeHolder}
         </option>
       )}
