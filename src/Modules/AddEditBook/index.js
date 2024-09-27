@@ -48,7 +48,7 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
       };
     }
     setEditedData(obj);
-  }, [data,allBooks]);
+  }, [data, allBooks]);
   const renderInput = (label, name) => {
     return (
       <InputComponent
@@ -64,10 +64,14 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
   };
   const submitClick = async (e) => {
     e.preventDefault();
+    const obj = {
+      ...editedData,
+      id: (allBooks.length + 1).toString(),
+    };
     try {
       const response =
         title === "Add"
-          ? await addBookService(editedData)
+          ? await addBookService(obj)
           : await updateBookService(editedData, editedData.id);
       console.log(response);
       submitCallBack(`Book ${title}d Successfully`, "success");
@@ -82,12 +86,25 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {" "}
           <label>{title} Record</label>
-          {renderInput("title")}
-          {renderInput("author")}
-          {renderInput("price")}
-          {renderInput("rating")}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              {" "}
+              {renderInput("title")}
+              {renderInput("author")}
+            </div>
+            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              {" "}
+              {renderInput("rating")}
+              {renderInput("price")}
+            </div>
+            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              {" "}
+              {renderInput("ratings")}
+              {renderInput("category")}
+            </div>
+          </div>
           {/* {renderInput("image")} */}
-          {renderInput("ratings")}
+          {renderInput("description")}
           {/* {renderInput("image", "file")} */}
         </div>
         {/* <button type="submit">
