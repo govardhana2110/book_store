@@ -2,6 +2,7 @@ import React from "react";
 import "./confirmation.css";
 
 const ConfirmationComponent = ({
+  id,
   title,
   onCloseConfirmClick,
   onNoClick,
@@ -43,7 +44,7 @@ const ConfirmationComponent = ({
             }}
           >
             {" "}
-            <button onClick={() => onYesClick()}>Yes</button>
+            <button onClick={() => onYesClick(id)}>Yes</button>
             <button onClick={() => onNoClick()}>No</button>
           </div>
         </div>

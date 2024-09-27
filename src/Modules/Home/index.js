@@ -30,16 +30,8 @@ const HomeComponent = () => {
   const [allBooks, setAllBooks] = useState([]);
   useEffect(() => {
     getBooksData();
-    getCartItems();
   }, []);
-  const getCartItems = async () => {
-    try {
-      const response = await getCartItemsService();
-      dispatch(setCartItems(response.data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+ 
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
@@ -115,7 +107,7 @@ const HomeComponent = () => {
           onCardClick={onCardClick}
         ></BookCardComponent>
       </div>
-      <PaginationComponent data={booksdata} />
+      {/* <PaginationComponent data={booksdata} /> */}
 
       {showPopup && (
         <div style={{ display: "flex", flexWrap: "wrap" }}>

@@ -34,6 +34,7 @@ const LoginComponent = () => {
 
       if (user) {
         localStorage.setItem("authToken", "qwertyuiajndklahsfvgui");
+        localStorage.setItem("role", user.role);
         setnotifyType("success");
         setnotifyMessage("Login Successful");
         setnotify(true);

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./header.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import getCartItemsService from "../../Lib/Services/GetCartItems";
+import { setCartItems } from "../../Store/CartItems";
 
 const HeaderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
+  const dispatch = useDispatch();
   const [mouseHover, setMouseHover] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
+    getCartItems();
     const clickListner = (event) => {
       const clickedId = event.target.id;
       if (clickedId !== "profile_icon") {
@@ -20,6 +24,15 @@ const HeaderComponent = () => {
       document.removeEventListener("click", clickListner);
     };
   }, []);
+
+  const getCartItems = async () => {
+    try {
+      const response = await getCartItemsService();
+      dispatch(setCartItems(response.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onProfileClick = () => {
     setMouseHover((prev) => !prev);
   };
@@ -114,20 +127,32 @@ const HeaderComponent = () => {
             Order History
           </label>
           <hr style={{ color: "black", width: "100%" }}></hr>
-          <label
-            style={{ cursor: "pointer" }}
-            onClick={() => onClick("/manageInventry")}
-          >
-            Manage Inventry
-          </label>
-          <hr style={{ color: "black", width: "100%" }}></hr>
-          <label
-            style={{ cursor: "pointer" }}
-            onClick={() => onClick("/salesStatistics")}
-          >
-            Sales Statistics
-          </label>
-          <hr style={{ color: "black", width: "100%" }}></hr>
+          {localStorage.getItem("role") === "admin" && (
+            <>
+              {" "}
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => onClick("/manageInventry")}
+              >
+                Manage Inventry
+              </label>
+              <hr style={{ color: "black", width: "100%" }}></hr>
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => onClick("/salesStatistics")}
+              >
+                Sales Statistics
+              </label>
+              <hr style={{ color: "black", width: "100%" }}></hr>
+              <label
+                style={{ cursor: "pointer" }}
+                onClick={() => onClick("/updateOrder")}
+              >
+                Update Orders
+              </label>
+              <hr style={{ color: "black", width: "100%" }}></hr>
+            </>
+          )}
           <label style={{ cursor: "pointer" }} onClick={() => logoutClick()}>
             Logout
           </label>

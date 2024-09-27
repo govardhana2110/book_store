@@ -3,38 +3,52 @@ import InputComponent from "../../Components/Input";
 import ButtonComponent from "../../Components/Button";
 import addBookService from "../../Lib/Services/AddBook";
 import updateBookService from "../../Lib/Services/UpdateBook";
+import getAllBooksService from "../../Lib/Services/GetAllBooks";
 
-const AddEditBookComponent = ({ data, title }) => {
+const AddEditBookComponent = ({ data, title, submitCallBack }) => {
   const [editedData, setEditedData] = useState({});
+  const [allBooks, setAllBooks] = useState([]);
   useEffect(() => {
+    getBooksData();
+  }, []);
+  const getBooksData = async () => {
+    try {
+      const response = await getAllBooksService();
+      setAllBooks(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    console.log(allBooks.length);
     let obj = {
+      id: (allBooks.length + 1).toString(),
       title: "",
       author: "",
-      price: "",
       rating: "",
-      image: "",
+      price: "",
+      image: "images/book image.jpg",
       ratings: "",
       category: "",
       status: "",
       description: "",
-      id: "4",
     };
     if (data && title === "Edit") {
       obj = {
+        id: data.id || "",
         title: data.title || "",
         author: data.author || "",
-        price: data.price || "",
         rating: data.rating || "",
+        price: data.price || "",
         image: data.image || "",
         ratings: data.ratings || "",
         category: "",
         status: "",
         description: "",
-        id: data.id || "",
       };
     }
     setEditedData(obj);
-  }, [data]);
+  }, [data,allBooks]);
   const renderInput = (label, name) => {
     return (
       <InputComponent
@@ -48,20 +62,23 @@ const AddEditBookComponent = ({ data, title }) => {
   const inputChange = (name, e) => {
     setEditedData((prev) => ({ ...prev, [name]: e.target.value }));
   };
-  const submitClick = async () => {
+  const submitClick = async (e) => {
+    e.preventDefault();
     try {
       const response =
         title === "Add"
           ? await addBookService(editedData)
           : await updateBookService(editedData, editedData.id);
       console.log(response);
+      submitCallBack(`Book ${title}d Successfully`, "success");
     } catch (err) {
       console.log(err);
+      submitCallBack(`Failed to ${title} book`, "error");
     }
   };
   return (
     <div>
-      <form onSubmit={() => submitClick()}>
+      <form onSubmit={(e) => submitClick(e)}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {" "}
           <label>{title} Record</label>

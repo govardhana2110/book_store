@@ -9,6 +9,7 @@ import ManageInventryComponent from "../ManageInventry";
 import CheckOutComponent from "../CheckOut";
 import OrderHistoryComponent from "../OrderHistory";
 import SalesStaticsComponent from "../SalesStatics";
+import UpdateOrderComponent from "../UpdateOrders";
 
 const RoutingModule = () => {
   return (
@@ -54,6 +55,14 @@ const RoutingModule = () => {
           element={
             <PrivateRoute>
               <SalesStaticsComponent></SalesStaticsComponent>
+            </PrivateRoute>
+          }
+        ></Route>
+         <Route
+          path="/updateOrder"
+          element={
+            <PrivateRoute>
+              <UpdateOrderComponent></UpdateOrderComponent>
             </PrivateRoute>
           }
         ></Route>

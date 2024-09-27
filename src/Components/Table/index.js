@@ -32,7 +32,7 @@ const TableComponent = ({ data, editClick, deleteClick }) => {
                 }}
               >
                 <button onClick={() => editClick(index)}>Edit</button>
-                <button onClick={() => deleteClick(index)}>Delete</button>
+                <button onClick={() => deleteClick(item.id)}>Delete</button>
               </td>
             </tr>
           ))}

@@ -1,6 +1,6 @@
 import request from "../CommonService";
 
-const updateOrderService = ({data,id}) => {
+const updateOrderService = (data,id) => {
   return request({
     url: `orderHistory/${id}`,
     method: "PUT",
