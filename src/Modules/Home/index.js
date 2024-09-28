@@ -16,6 +16,7 @@ import addCartItemsService from "../../Lib/Services/AddCartItems";
 
 const HomeComponent = () => {
   const categories = [
+    { name: "All", value: "all" },
     { name: "Funny", value: "funny" },
     { name: "Crime", value: "crime" },
     { name: "Thriller", value: "thriller" },
@@ -29,6 +30,8 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const [booksdata, setBooksData] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
+  const [sortBy, setSortBy] = useState("all");
+
   useEffect(() => {
     getBooksData();
   }, []);
@@ -36,7 +39,7 @@ const HomeComponent = () => {
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
-      setBooksData(response.data);
+      setBooksData(response.data.slice(0, 10));
       setAllBooks(response.data);
     } catch (err) {
       console.log(err);
@@ -60,7 +63,6 @@ const HomeComponent = () => {
       };
       dataArr = [...dataArr, newItem];
       cartItemsChange(newItem);
-
     }
     dispatch(setCartItems(dataArr));
   };
@@ -86,6 +88,27 @@ const HomeComponent = () => {
   const filteredCallBack = (data) => {
     setBooksData([...data]);
   };
+  const onSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+  const sortFunction = () => {
+    if (sortBy !== "all") {
+      const sortedData = allBooks.filter((item) =>
+        Object.keys(item).some((keys) =>
+          String(item[keys]).toLowerCase().includes(sortBy.toLowerCase())
+        )
+      );
+      setBooksData(sortedData);
+    } else {
+      setBooksData(allBooks);
+    }
+  };
+  useEffect(() => {
+    sortFunction();
+  }, [sortBy]);
+  const paginationData = (data) => {
+    setBooksData(data);
+  };
   return (
     <>
       <HeaderComponent></HeaderComponent>
@@ -107,6 +130,8 @@ const HomeComponent = () => {
             <DropdownComponent
               options={categories}
               placeHolder="Sort by..."
+              value={sortBy}
+              onChange={(e) => onSortChange(e)}
             ></DropdownComponent>
           </div>
         </div>
@@ -117,8 +142,7 @@ const HomeComponent = () => {
           onCardClick={onCardClick}
         ></BookCardComponent>
       </div>
-      {/* <PaginationComponent data={booksdata} /> */}
-
+      <PaginationComponent data={allBooks} paginationData={paginationData} />
       {showPopup && (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           <ModelPopupComponent onCloseClick={() => onCloseClick()}>

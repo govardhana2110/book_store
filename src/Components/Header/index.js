@@ -37,6 +37,7 @@ const HeaderComponent = () => {
     setMouseHover((prev) => !prev);
   };
   const onClick = (route) => {
+   
     navigate(route);
   };
   const checkOutClick = () => {

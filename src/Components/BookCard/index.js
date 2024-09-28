@@ -25,7 +25,7 @@ const BookCardComponent = ({
             {" "}
             <div style={{ display: "flex", justifyContent: "center" }}>
               <img
-                src="images/book image.jpg"
+                src={item.image}
                 alt="#"
                 style={{ height: "6rem", width: "5rem" }}
               ></img>
@@ -55,7 +55,10 @@ const BookCardComponent = ({
                 <span style={{ fontWeight: "bold" }}>Author : </span>{" "}
                 <span style={{ color: "blue" }}>{item.author}</span>
               </label>
-              <RatingComponent rating={item.rating} ratings={item.ratings}></RatingComponent>
+              <RatingComponent
+                rating={item.rating}
+                ratings={item.ratings}
+              ></RatingComponent>
             </div>
             <div
               style={{

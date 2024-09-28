@@ -4,9 +4,11 @@ import RatingComponent from "../../Components/Rating";
 import { useSelector } from "react-redux";
 import "./orderHistory.css";
 import getOrderHistoryService from "../../Lib/Services/OrderHistory";
+import { useLocation } from "react-router-dom";
 
 const OrderHistoryComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
+  const location = useLocation();
   const [orderHistory, setOrderHistory] = useState([]);
   const getOrderHistory = async () => {
     try {

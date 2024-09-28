@@ -103,7 +103,6 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
               {renderInput("category")}
             </div>
           </div>
-          {/* {renderInput("image")} */}
           {renderInput("description")}
           {/* {renderInput("image", "file")} */}
         </div>
