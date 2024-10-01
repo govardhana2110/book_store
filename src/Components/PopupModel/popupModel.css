@@ -24,7 +24,7 @@
   justify-content: center;
   width: fit-content!;
   padding: 2rem;
-  z-index: 1000000;
+  z-index: 10000;
   flex-wrap: wrap;
   top: 20px;
   word-wrap: break-word; /* Ensure long words or URLs wrap */

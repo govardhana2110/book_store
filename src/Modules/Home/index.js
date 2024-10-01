@@ -39,7 +39,7 @@ const HomeComponent = () => {
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
-      setBooksData(response.data.slice(0, 10));
+      // setBooksData(response.data.slice(0, 10));
       setAllBooks(response.data);
     } catch (err) {
       console.log(err);

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderComponent from "../../Components/Header";
 import ButtonComponent from "../../Components/Button";
 import NotifyComponent from "../../Components/Notify";
+import LoaderComponent from "../../Components/Loader";
 
 const LoginComponent = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -15,7 +16,7 @@ const LoginComponent = () => {
   const [notify, setnotify] = useState(false);
   const [notifyMessage, setnotifyMessage] = useState("");
   const [notifyType, setnotifyType] = useState("");
-
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const handleChange = (value, name) => {
     setLoginDetails((prev) => ({ ...prev, [name]: value }));
@@ -23,6 +24,7 @@ const LoginComponent = () => {
 
   const loginClick = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       const response = await loginService();
       const users = response.data;
@@ -39,11 +41,15 @@ const LoginComponent = () => {
         setnotifyType("success");
         setnotifyMessage("Login Successful");
         setnotify(true);
-        navigate("/home");
+        setTimeout(() => {
+          setLoader(false);
+          navigate("/home");
+        },300);
       } else {
         setnotifyType("danger");
         setnotifyMessage("Login failed");
         setnotify(true);
+        setLoader(false);
       }
     } catch (err) {
       console.log(err);
@@ -58,7 +64,7 @@ const LoginComponent = () => {
   }, []);
   return (
     <>
-      <HeaderComponent></HeaderComponent>
+      {/* <HeaderComponent></HeaderComponent> */}
       <div className="loginGroundCard">
         <form onSubmit={(e) => loginClick(e)}>
           <div
@@ -110,6 +116,7 @@ const LoginComponent = () => {
           message={notifyMessage}
         ></NotifyComponent>
       )}
+      {loader && <LoaderComponent></LoaderComponent>}{" "}
     </>
   );
 };

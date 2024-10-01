@@ -7,6 +7,8 @@ import ButtonComponent from "../../Components/Button";
 import HeaderComponent from "../../Components/Header";
 import loginService from "../../Lib/Services/Login";
 import registerService from "../../Lib/Services/Register";
+import NotifyComponent from "../../Components/Notify";
+import LoaderComponent from "../../Components/Loader";
 
 const RegisterComponent = () => {
   const [registerDetails, setRegisterDetails] = useState({
@@ -23,6 +25,10 @@ const RegisterComponent = () => {
     { name: "User", value: "user" },
   ];
   const [usersList, setUsersList] = useState(0);
+  const [notify, setnotify] = useState(false);
+  const [notifyMessage, setnotifyMessage] = useState("");
+  const [notifyType, setnotifyType] = useState("");
+  const [loader, setLoader] = useState(false);
   const getUsersList = async () => {
     try {
       const response = await loginService();
@@ -35,15 +41,15 @@ const RegisterComponent = () => {
     getUsersList();
   }, []);
   const navigate = useNavigate();
-  const renderInput = (name, type) => {
+  const renderInput = (name, type, label) => {
     return (
       <InputComponent
         value={registerDetails[name]}
         required={true}
-        placeholder={name}
+        placeholder={label}
         onChange={(e) => handleChange(e.target.value, name)}
         type={type}
-        label={name}
+        label={label}
       ></InputComponent>
     );
   };
@@ -53,6 +59,7 @@ const RegisterComponent = () => {
 
   const registerClick = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       let obj = {
         ...registerDetails,
@@ -60,8 +67,20 @@ const RegisterComponent = () => {
       };
       const response = await registerService(obj);
       console.log(response);
+      setTimeout(() => {
+        setLoader(false);
+        setnotifyType("success");
+        setnotifyMessage("Registration Successfully");
+        setnotify(true);
+      }, 300);
     } catch (err) {
       console.log(err);
+      setTimeout(() => {
+        setLoader(false);
+        setnotifyType("warning");
+        setnotifyMessage("Registration failed");
+        setnotify(true);
+      }, 300);
     }
   };
   const backToLogin = () => {
@@ -72,7 +91,7 @@ const RegisterComponent = () => {
   };
   return (
     <>
-      <HeaderComponent></HeaderComponent>
+      {/* <HeaderComponent></HeaderComponent> */}
       <div style={{ paddingTop: "3rem" }}>
         {" "}
         <div className="registerBackGroundCard">
@@ -109,8 +128,8 @@ const RegisterComponent = () => {
                     gap: "1rem",
                   }}
                 >
-                  {renderInput("firstName", "text")}
-                  {renderInput("lastName", "text")}
+                  {renderInput("firstName", "text", "First Name")}
+                  {renderInput("lastName", "text", "Last Name")}
                 </div>
                 <div
                   style={{
@@ -119,8 +138,8 @@ const RegisterComponent = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  {renderInput("email", "text")}
-                  {renderInput("phone", "number")}
+                  {renderInput("email", "text", "Email")}
+                  {renderInput("phone", "number", "Phone")}
                 </div>
                 <div
                   style={{
@@ -130,8 +149,8 @@ const RegisterComponent = () => {
                     gap: "1rem",
                   }}
                 >
-                  {renderInput("userName", "text")}
-                  {renderInput("password", "password")}
+                  {renderInput("userName", "text", "User Name")}
+                  {renderInput("password", "password", "Password")}
                 </div>
                 <DropdownComponent
                   options={userTypes}
@@ -143,7 +162,10 @@ const RegisterComponent = () => {
               </div>
 
               <div>
-                <ButtonComponent name="Register" type='submit'></ButtonComponent>
+                <ButtonComponent
+                  name="Register"
+                  type="submit"
+                ></ButtonComponent>
               </div>
               <label style={{ color: "black", fontSize: "small" }}>
                 Back to{" "}
@@ -155,6 +177,14 @@ const RegisterComponent = () => {
           </form>
         </div>
       </div>
+      {notify && (
+        <NotifyComponent
+          message={notifyMessage}
+          type={notifyType}
+          show={notify}
+        ></NotifyComponent>
+      )}
+      {loader && <LoaderComponent></LoaderComponent>}
     </>
   );
 };

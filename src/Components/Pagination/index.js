@@ -18,6 +18,7 @@ const PaginationComponent = ({ data, paginationData }) => {
   useEffect(() => {
     const pages = data.length / recordsPerPage;
     setTotalPages(Math.ceil(pages));
+    paginationData(data.slice(0, 10));
   }, [data]);
   const nextClick = () => {
     if (currentPage < totalPages) {
@@ -31,9 +32,7 @@ const PaginationComponent = ({ data, paginationData }) => {
         paginationData(data.slice(0, 10));
         setCurrentPage(1);
       } else {
-        paginationData(
-          data.slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10)
-        );
+        paginationData(data.slice((currentPage - 1) * 10, currentPage * 10));
         setCurrentPage((prev) => prev - 1);
       }
     }

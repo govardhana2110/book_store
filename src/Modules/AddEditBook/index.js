@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import InputComponent from "../../Components/Input";
 import ButtonComponent from "../../Components/Button";
+import TextAreaComponent from "../../Components/TextArea";
 import addBookService from "../../Lib/Services/AddBook";
 import updateBookService from "../../Lib/Services/UpdateBook";
 import getAllBooksService from "../../Lib/Services/GetAllBooks";
+import LoaderComponent from "../../Components/Loader";
 
 const AddEditBookComponent = ({ data, title, submitCallBack }) => {
   const [editedData, setEditedData] = useState({});
   const [allBooks, setAllBooks] = useState([]);
+  const [loader, setLoader] = useState(false);
+  
   useEffect(() => {
     getBooksData();
   }, []);
@@ -42,20 +46,22 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
         price: data.price || "",
         image: data.image || "",
         ratings: data.ratings || "",
-        category: "",
-        status: "",
-        description: "",
+        category: data.category || "",
+        status: data.status || "",
+        description: data.description || "",
       };
     }
     setEditedData(obj);
   }, [data, allBooks]);
-  const renderInput = (label, name) => {
+  const renderInput = (label, type, name) => {
     return (
       <InputComponent
-        placeholder={label}
+        placeholder={name}
         value={editedData[label]}
         onChange={(e) => inputChange(label, e)}
-        type={(name && name) || "text"}
+        type={type}
+        required={true}
+        label={name}
       ></InputComponent>
     );
   };
@@ -64,6 +70,7 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
   };
   const submitClick = async (e) => {
     e.preventDefault();
+    setLoader(true);
     const obj = {
       ...editedData,
       id: (allBooks.length + 1).toString(),
@@ -74,9 +81,14 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
           ? await addBookService(obj)
           : await updateBookService(editedData, editedData.id);
       console.log(response);
-      submitCallBack(`Book ${title}d Successfully`, "success");
+      setTimeout(() => {
+        setLoader(false);
+        submitCallBack(`Book ${title}d Successfully`, "success");
+      }, 300);
     } catch (err) {
       console.log(err);
+      setLoader(true);
+
       submitCallBack(`Failed to ${title} book`, "error");
     }
   };
@@ -89,21 +101,27 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
               {" "}
-              {renderInput("title")}
-              {renderInput("author")}
+              {renderInput("title", "text", "Title")}
+              {renderInput("author", "text", "Author")}
             </div>
             <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
               {" "}
-              {renderInput("rating")}
-              {renderInput("price")}
+              {renderInput("rating", "text", "Rating")}
+              {renderInput("price", "number", "Price")}
             </div>
             <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
               {" "}
-              {renderInput("ratings")}
-              {renderInput("category")}
+              {renderInput("ratings", "number", "Ratings")}
+              {renderInput("category", "text", "Category")}
             </div>
           </div>
-          {renderInput("description")}
+          <TextAreaComponent
+            placeholder="Description"
+            value={editedData["description"]}
+            onChange={(e) => inputChange("description", e)}
+            type="text"
+            label="Description"
+          ></TextAreaComponent>
           {/* {renderInput("image", "file")} */}
         </div>
         {/* <button type="submit">
@@ -114,6 +132,7 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
           type="submit"
         ></ButtonComponent>
       </form>
+      {loader && <LoaderComponent></LoaderComponent>}
     </div>
   );
 };

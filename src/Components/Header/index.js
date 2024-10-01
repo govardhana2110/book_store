@@ -62,12 +62,12 @@ const HeaderComponent = () => {
         >
           <div
             className="logo"
-            style={{ padding: "0.5rem 0.5rem 0.5rem 1.5rem" }}
+            style={{ padding: "0.7rem 0.5rem 0.5rem 1.5rem" }}
           >
             <img
-              src="images/daimlerImage.png"
+              src="images/daimlerImage1.png"
               alt="#"
-              style={{ height: "2rem", width: "6rem" }}
+              style={{ height: "2rem", width: "11rem" }}
               onClick={() => onHomeClick()}
             ></img>
           </div>

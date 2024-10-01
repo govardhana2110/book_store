@@ -7,12 +7,19 @@ import getOrderHistoryService from "../../Lib/Services/OrderHistory";
 import DropdownComponent from "../../Components/Dropdown";
 import ButtonComponent from "../../Components/Button";
 import updateOrderService from "../../Lib/Services/UpdateOrder";
+import NotifyComponent from "../../Components/Notify";
+import LoaderComponent from "../../Components/Loader";
 
 const UpdateOrderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
   const [orderHistory, setOrderHistory] = useState([]);
   const [orderStatusValue, setOrderStatusValue] = useState(null);
   const [orderId, setOrderId] = useState(null);
+  const [notify, setnotify] = useState(false);
+  const [notifyMessage, setnotifyMessage] = useState("");
+  const [notifyType, setnotifyType] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const orderStatus = [
     { name: "Placed", value: "placed" },
     { name: "Confirmed", value: "confirmed" },
@@ -35,14 +42,27 @@ const UpdateOrderComponent = () => {
     getOrderHistory();
   }, []);
   const onOrderUpdateClick = async (data) => {
+    setLoader(true);
     try {
       const response = await updateOrderService(
         { ...data, orderStatus: orderStatusValue },
         data.id
       );
       console.log(response);
+      setTimeout(() => {
+        setLoader(false);
+        setnotifyType("success");
+        setnotifyMessage("Order Updated Successfully");
+        setnotify(true);
+      }, 300);
     } catch (err) {
       console.log(err);
+      setTimeout(() => {
+        setLoader(false);
+        setnotifyType("error");
+        setnotifyMessage("Failed to update order");
+        setnotify(true);
+      }, 300);
     }
   };
   const onDroDownChange = (e, id) => {
@@ -100,7 +120,7 @@ const UpdateOrderComponent = () => {
                         rating={item.rating}
                         ratings={item.ratings}
                       ></RatingComponent>
-                      <label>Total Quantity :₹{item.quantity}</label>
+                      <label>Total Quantity :{item.quantity}</label>
                       <label>Total Price :₹{item.price * item.quantity}</label>
                       <div>
                         {" "}
@@ -126,6 +146,14 @@ const UpdateOrderComponent = () => {
             ))}
         </div>
       </div>
+      {notify && (
+        <NotifyComponent
+          message={notifyMessage}
+          type={notifyType}
+          show={notify}
+        ></NotifyComponent>
+      )}
+      {loader && <LoaderComponent></LoaderComponent>}
     </>
   );
 };
