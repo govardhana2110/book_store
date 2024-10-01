@@ -6,54 +6,95 @@
   padding: 1rem;
   cursor: pointer;
 }
+
 .bookCard {
   display: flex;
   flex-direction: column;
-  /* background-color: white; */
-  /* background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 55%,#fad0c4 100%); */
-  /* background:linear-gradient(135deg,#f6d365 0%,#fda085 100%); */
-  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 50%, #fddb92 100%);
-  /* background-image: linear-gradient(
-    97.24deg,
-    #8320ff 3.22%,
-    #1168eb 49.19%,
-    #71eaff 97.11%
-  ); */
-  /* background: linear-gradient(
-    150.24deg,
-    rgba(131, 32, 255, 0.2) 3.22%,
-    rgba(17, 104, 235, 0.2) 49.19%,
-    rgba(113, 234, 255, 0.2) 97.11%
-  ); */
-  /* background:linear-gradient(135deg,#fbfbfb 0%,#fbedee 50%,#accbee 100%); */
-  /* background:linear-gradient(45deg,#d4fc79 0%,#96e6a1 50%,#84fab0 100%); */
-  /* background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 55%,#fad0c4 100%); */
-  /* background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 40%,#f5e1f4 100%); */
-  border-radius: 7%;
-  box-shadow: 0 14px 16px rgba(0, 0, 0, 0.1);
+  background: white; /* Clear white background */
+  border: 1px solid #e0e0e0; /* Subtle border for definition */
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-width: 10rem;
-  max-width: 8rem;
-  height: 16rem;
+  min-width: 100px; /* Set a min width for larger screens */
+  max-width: 300px; /* Adjust max width for larger screens */
+  height: auto; /* Allow height to adjust based on content */
+  text-align: center; /* Center align text */
+  justify-content: center;
+  align-items: center;
 }
+
 .bookCard:hover {
-  transform: scale(1.05); /* Increase size slightly */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
 }
+
 .truncate {
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
 }
 
-/* .truncate:hover {
-  overflow: visible;       
-  white-space: normal;     
-  background-color: #f0f0f0; 
-  position: relative;     
-  z-index: 1;             
-} */
+/* Label styles */
+.label {
+  font-family: 'Arial', sans-serif; /* Change to a clean font */
+  font-weight: 600; /* Bold for emphasis */
+  margin: 0.2rem 0; /* Add margin for spacing */
+  font-size: small;
+}
+
+.title {
+  color: #333; /* Dark gray for title */
+}
+
+.rating {
+  color: #ff9800; /* Orange for rating */
+}
+
+.price {
+  color: #d32f2f; /* Red for price */
+  font-size: 1.1rem; /* Slightly larger font for price */
+}
+
+.author {
+  color: #1976d2; /* Blue for author */
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff; /* Button color */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: small;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.bookDetails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+img {
+  max-width: 100%; /* Ensure images are responsive */
+  height: auto; /* Maintain aspect ratio */
+ 
+}
+.buttonGroup{
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap:1rem
+}

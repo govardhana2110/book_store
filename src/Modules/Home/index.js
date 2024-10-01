@@ -30,7 +30,7 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const [booksdata, setBooksData] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
-  const [sortBy, setSortBy] = useState("all");
+  const [sortBy, setSortBy] = useState("");
 
   useEffect(() => {
     getBooksData();
@@ -100,7 +100,7 @@ const HomeComponent = () => {
       );
       setBooksData(sortedData);
     } else {
-      setBooksData(allBooks);
+      setBooksData(allBooks.slice(0, 10));
     }
   };
   useEffect(() => {
@@ -112,14 +112,16 @@ const HomeComponent = () => {
   return (
     <>
       <HeaderComponent></HeaderComponent>
-      <div style={{ paddingTop: "4rem" }}>
+      <div style={{ paddingTop: "4rem", width: "100%" }}>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "0 8rem 0rem 8rem",
+            alignItems: "center",
             flexWrap: "wrap",
             color: "black",
+            width:'80%',
+            alignContent:'center'
           }}
         >
           <SearchComponent

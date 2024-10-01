@@ -1,6 +1,7 @@
 import React from "react";
 import "./bookCard.css";
 import RatingComponent from "../Rating";
+
 const BookCardComponent = ({
   data,
   addToCartClick,
@@ -12,77 +13,50 @@ const BookCardComponent = ({
       onCardClick(id);
     }
   };
+
   return (
     <div className="mainDiv">
       {data &&
         data.map((item, index) => (
           <div
             className="bookCard"
-            id="card"
             onClick={(e) => cardClick(e, index)}
             key={index}
           >
-            {" "}
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <img
-                src={item.image}
-                alt="#"
-                style={{ height: "6rem", width: "5rem" }}
-              ></img>
-            </div>
-            <div
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                flexDirection: "column",
-                fontSize: "small",
-                color: "#676767",
-              }}
-            >
-              <label className="truncate">
-                <span style={{ fontWeight: "bold" }}>Title : </span>
+            <img
+              src={item.image}
+              alt={item.title}
+              style={{ height: "10rem", width: "10rem" }}
+            />
+            <div className="bookDetails">
+              <label className={`label title truncate`}>
                 <span>{item.title}</span>
               </label>
-              <label className="truncate">
-                <span style={{ fontWeight: "bold" }}>Rating : </span>{" "}
-                {item.rating}
+              <label className={`label rating truncate`}>{item.rating}/5</label>
+              <label className={`label price truncate`}>
+                <span>₹{item.price}</span>
               </label>
-              <label className="truncate">
-                <span style={{ fontWeight: "bold" }}>Price : </span>{" "}
-                <span style={{ color: "#d51912" }}> ₹{item.price}</span>{" "}
+              <label className={`label author truncate`}>
+                <span>{item.author}</span>
               </label>
-              <label className="truncate">
-                <span style={{ fontWeight: "bold" }}>Author : </span>{" "}
-                <span style={{ color: "blue" }}>{item.author}</span>
-              </label>
-              <RatingComponent
-                rating={item.rating}
-                ratings={item.ratings}
-              ></RatingComponent>
+              <RatingComponent rating={item.rating} ratings={item.ratings} />
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                gap: "1rem",
-              }}
-            >
+            <div className="buttonGroup">
               <button id="buyNow" onClick={() => buyNowClick(index)}>
                 Buy Now
               </button>
-              <button
-                id="addToCart"
-                onClick={() => addToCartClick(index)}
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                Add to cart{" "}
-                <img
-                  src="images/add-to-bag.png"
-                  alt="#"
-                  width={20}
-                  height={20}
-                ></img>
+
+              <button id="addToCart" onClick={() => addToCartClick(index)}>
+                Add to cart
+                <span style={{ display: "flex", justifyContent: "center" }}>
+                  {" "}
+                  <img
+                    src="images/add-to-bag.png"
+                    alt="Add to Cart"
+                    width={18}
+                    height={18}
+                  />
+                </span>
               </button>
             </div>
           </div>
@@ -90,4 +64,5 @@ const BookCardComponent = ({
     </div>
   );
 };
+
 export default BookCardComponent;

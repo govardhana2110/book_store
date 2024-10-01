@@ -10,7 +10,7 @@ import LoaderComponent from "../../Components/Loader";
 
 const LoginComponent = () => {
   const [loginDetails, setLoginDetails] = useState({
-    userName: "",
+    username: "",
     password: "",
   });
   const [notify, setnotify] = useState(false);
@@ -26,31 +26,20 @@ const LoginComponent = () => {
     e.preventDefault();
     setLoader(true);
     try {
-      const response = await loginService();
-      const users = response.data;
-      const user = users.find(
-        (u) =>
-          u.userName === loginDetails.userName &&
-          u.password === loginDetails.password
-      );
+      const response = await loginService(loginDetails);
+     
 
-      if (user) {
-        console.log(user);
-        localStorage.setItem("authToken", "qwertyuiajndklahsfvgui");
-        localStorage.setItem("role", user.role);
-        setnotifyType("success");
-        setnotifyMessage("Login Successful");
+    
+        // localStorage.setItem("authToken", "qwertyuiajndklahsfvgui");
+        // localStorage.setItem("role", user.role);
+        // setnotifyType("success");
+        // setnotifyMessage("Login Successful");
         setnotify(true);
-        setTimeout(() => {
-          setLoader(false);
-          navigate("/home");
-        },300);
-      } else {
-        setnotifyType("danger");
-        setnotifyMessage("Login failed");
-        setnotify(true);
-        setLoader(false);
-      }
+        // setTimeout(() => {
+        //   setLoader(false);
+        //   navigate("/home");
+        // }, 300);
+    
     } catch (err) {
       console.log(err);
     }
@@ -76,15 +65,15 @@ const LoginComponent = () => {
             }}
           >
             <label
-              style={{ color: "black", fontSize: "larger", fontWeight: "600" }}
+              style={{ color: "black", fontSize: "larger", fontWeight: "700" }}
             >
               Login
             </label>
             <InputComponent
-              value={loginDetails.userName}
+              value={loginDetails.username}
               required={true}
               placeholder="User Name"
-              onChange={(e) => handleChange(e.target.value, "userName")}
+              onChange={(e) => handleChange(e.target.value, "username")}
               type="text"
               label="User Name"
             ></InputComponent>
@@ -96,7 +85,7 @@ const LoginComponent = () => {
               type="password"
               label="Password"
             ></InputComponent>
-            <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <ButtonComponent type="submit" name="Login"></ButtonComponent>
             </div>
             <label style={{ color: "black", fontSize: "small" }}>

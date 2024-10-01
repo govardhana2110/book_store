@@ -437,7 +437,7 @@
       "status": "available",
       "quantity": 2,
       "description": "Some description",
-      "orderStatus": "placed"
+      "orderStatus": "confirmed"
     },
     {
       "id": "2",

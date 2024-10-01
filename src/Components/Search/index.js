@@ -12,7 +12,7 @@ const SearchComponent = ({ data, filteredCallBack }) => {
         setDebounceParameter(searchValue);
       }, 1000);
     } else {
-      filteredCallBack(data);
+      filteredCallBack(data.slice(0,10));
     }
     return () => clearTimeout(debounceHandler);
   }, [searchValue]);
@@ -32,7 +32,7 @@ const SearchComponent = ({ data, filteredCallBack }) => {
       );
       filteredCallBack && filteredCallBack(filteredData);
     } else {
-      filteredCallBack && filteredCallBack(data);
+      filteredCallBack && filteredCallBack(data.slice(0,10));
     }
   };
 

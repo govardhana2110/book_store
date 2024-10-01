@@ -13,7 +13,7 @@ import LoaderComponent from "../../Components/Loader";
 const UpdateOrderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
   const [orderHistory, setOrderHistory] = useState([]);
-  const [orderStatusValue, setOrderStatusValue] = useState(null);
+  const [orderStatusValue, setOrderStatusValue] = useState('');
   const [orderId, setOrderId] = useState(null);
   const [notify, setnotify] = useState(false);
   const [notifyMessage, setnotifyMessage] = useState("");

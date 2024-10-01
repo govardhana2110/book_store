@@ -9,20 +9,21 @@ import loginService from "../../Lib/Services/Login";
 import registerService from "../../Lib/Services/Register";
 import NotifyComponent from "../../Components/Notify";
 import LoaderComponent from "../../Components/Loader";
+import axios from "axios";
 
 const RegisterComponent = () => {
   const [registerDetails, setRegisterDetails] = useState({
-    email: "",
-    phone: "",
-    userName: "",
-    password: "",
-    role: null,
+    // email: "",
+    // phone: "",
     firstName: "",
     lastName: "",
+    username: "",
+    password: "",
+    role: "",
   });
   const userTypes = [
-    { name: "Admin", value: "admin" },
-    { name: "User", value: "user" },
+    { name: "Admin", value: "ADMIN" },
+    { name: "User", value: "USER" },
   ];
   const [usersList, setUsersList] = useState(0);
   const [notify, setnotify] = useState(false);
@@ -63,7 +64,6 @@ const RegisterComponent = () => {
     try {
       let obj = {
         ...registerDetails,
-        id: usersList + 1,
       };
       const response = await registerService(obj);
       console.log(response);
@@ -137,10 +137,7 @@ const RegisterComponent = () => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                   }}
-                >
-                  {renderInput("email", "text", "Email")}
-                  {renderInput("phone", "number", "Phone")}
-                </div>
+                ></div>
                 <div
                   style={{
                     display: "flex",
@@ -149,7 +146,7 @@ const RegisterComponent = () => {
                     gap: "1rem",
                   }}
                 >
-                  {renderInput("userName", "text", "User Name")}
+                  {renderInput("username", "text", "User Name")}
                   {renderInput("password", "password", "Password")}
                 </div>
                 <DropdownComponent
@@ -161,7 +158,7 @@ const RegisterComponent = () => {
                 ></DropdownComponent>
               </div>
 
-              <div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <ButtonComponent
                   name="Register"
                   type="submit"

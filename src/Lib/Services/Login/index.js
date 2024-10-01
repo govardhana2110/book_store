@@ -1,9 +1,10 @@
 import request from "../CommonService";
 
-const loginService = () => {
+const loginService = (data) => {
   return request({
-    url: "users",
-    method: "GET",
+    url: "login",
+    method: "POST",
+    data
   });
 };
 export default loginService;
