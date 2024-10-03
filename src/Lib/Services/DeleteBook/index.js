@@ -2,7 +2,7 @@ import request from "../CommonService";
 
 const deleteBookService = (id) => {
   return request({
-    url: `books/${id}`,
+    url: `api/books/${id}`,
     method: "DELETE",
   });
 };

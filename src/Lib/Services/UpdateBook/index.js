@@ -1,10 +1,10 @@
 import request from "../CommonService";
 
-const updateBookService = (data,id=null) => {
+const updateBookService = (data, id) => {
   return request({
-    url:id? `books/${id}`:`books`,
+    url: `api/books/${id}`,
     method: "PUT",
-    data: { ...data },
+    data,
   });
 };
 export default updateBookService;

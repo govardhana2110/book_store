@@ -2,9 +2,10 @@ import request from "../CommonService";
 
 const addBookService = (data) => {
   return request({
-    url: "books",
+    url: "api/books/add",
     method: "POST",
-    data: { ...data },
+    headers: {'Content-Type': 'multipart/form-data'},
+    data,
   });
 };
 export default addBookService;

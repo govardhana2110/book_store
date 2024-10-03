@@ -14,7 +14,7 @@ const TableComponent = ({ data, editClick, deleteClick }) => {
       <tbody>
         {data.length &&
           data.map((item, index) => (
-            <tr key={index}>
+            <tr key={`${index}_${item.bookName}`}>
               {Object.keys(item).map((keys) => (
                 <td className="truncate" key={item[keys]}>
                   {keys === "image" ? (

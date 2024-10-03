@@ -26,7 +26,7 @@ const NotifyComponent = ({ message, type, show }) => {
         <div className="toast-container">
           <div
             className={
-              type === "danger"
+              type === "error"
                 ? "dangerToast"
                 : type === "warning"
                 ? "warningToast"

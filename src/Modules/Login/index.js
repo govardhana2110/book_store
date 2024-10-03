@@ -7,6 +7,7 @@ import HeaderComponent from "../../Components/Header";
 import ButtonComponent from "../../Components/Button";
 import NotifyComponent from "../../Components/Notify";
 import LoaderComponent from "../../Components/Loader";
+import Cookies from "js-cookie";
 
 const LoginComponent = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -27,29 +28,38 @@ const LoginComponent = () => {
     setLoader(true);
     try {
       const response = await loginService(loginDetails);
-     
-
-    
-        // localStorage.setItem("authToken", "qwertyuiajndklahsfvgui");
-        // localStorage.setItem("role", user.role);
-        // setnotifyType("success");
-        // setnotifyMessage("Login Successful");
+      console.log(response);
+      if (response.status === 200) {
+        Cookies.set("authToken", response.data.access_token);
+        Cookies.set("role", response.data.role);
+        Cookies.set("refreshToken", response.data.refresh_token)
+        setnotifyType("success");
+        setnotifyMessage("Login Successful");
+        setLoader(false);
         setnotify(true);
-        // setTimeout(() => {
-        //   setLoader(false);
-        //   navigate("/home");
-        // }, 300);
-    
+        navigate("/home");
+      } else {
+        setnotifyType("error");
+        setnotifyMessage("Login failed");
+        setLoader(false);
+        setnotify(true);
+      }
     } catch (err) {
       console.log(err);
+      setnotifyType("error");
+      setnotifyMessage("Login failed");
+      setLoader(false);
+      setnotify(true);
     }
   };
   const navigateToRegister = () => {
     navigate("/register");
   };
   useEffect(() => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("role");
+    Cookies.remove('authToken');
+    Cookies.remove('role');
+    Cookies.remove('refreshToken')
+   
   }, []);
   return (
     <>

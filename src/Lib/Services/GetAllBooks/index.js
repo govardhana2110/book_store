@@ -2,7 +2,7 @@ import request from "../CommonService";
 
 const getAllBooksService = () => {
   return request({
-    url: "books",
+    url: "api/books",
     method: "GET",
   });
 };

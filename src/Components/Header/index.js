@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import getCartItemsService from "../../Lib/Services/GetCartItems";
 import { setCartItems } from "../../Store/CartItems";
+import Cookies from "js-cookie";
 
 const HeaderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
@@ -11,6 +12,7 @@ const HeaderComponent = () => {
   const [mouseHover, setMouseHover] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     getCartItems();
     const clickListner = (event) => {
@@ -37,7 +39,6 @@ const HeaderComponent = () => {
     setMouseHover((prev) => !prev);
   };
   const onClick = (route) => {
-   
     navigate(route);
   };
   const checkOutClick = () => {
@@ -47,7 +48,9 @@ const HeaderComponent = () => {
     navigate("/home");
   };
   const logoutClick = () => {
-    localStorage.removeItem("authToken");
+    Cookies.remove("authToken");
+    Cookies.remove("role");
+    Cookies.remove("refreshToken");
     navigate("/login");
   };
   return (
@@ -74,49 +77,48 @@ const HeaderComponent = () => {
           {/* <label style={{ display: "flex", alignItems: "center" }}>
             Online Book store
           </label> */}
-          {localStorage.getItem("authToken") && (
-            <div
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              paddingRight: "2rem",
+              gap: "1rem",
+            }}
+          >
+            {" "}
+            <img
+              className="profileIco"
+              src="images/shopping-bag.png"
+              // src="images/cart.png"
+              alt="#"
+              style={{ height: "1.5rem", width: "1.5rem" }}
+              onClick={() => checkOutClick()}
+              id="cart_icon"
+            ></img>
+            <img
+              className="profileIco"
+              src="images/profile.ico"
+              alt="#"
+              style={{ height: "2rem", width: "2rem" }}
+              onClick={() => onProfileClick()}
+              id="profile_icon"
+            ></img>
+            <label
               style={{
-                display: "flex",
-                alignItems: "center",
-                paddingRight: "2rem",
-                gap: "1rem",
+                backgroundColor: "red",
+                color: "white",
+                borderRadius: "100%",
+                width: "0.9rem",
+                height: "0.9rem",
+                fontSize: "10px",
+                position: "fixed",
+                top: "5px",
               }}
             >
-              {" "}
-              <img
-                className="profileIco"
-                src="images/shopping-bag.png"
-                // src="images/cart.png"
-                alt="#"
-                style={{ height: "1.5rem", width: "1.5rem" }}
-                onClick={() => checkOutClick()}
-                id="cart_icon"
-              ></img>
-              <img
-                className="profileIco"
-                src="images/profile.ico"
-                alt="#"
-                style={{ height: "2rem", width: "2rem" }}
-                onClick={() => onProfileClick()}
-                id="profile_icon"
-              ></img>
-              <label
-                style={{
-                  backgroundColor: "red",
-                  color: "white",
-                  borderRadius: "100%",
-                  width: "0.9rem",
-                  height: "0.9rem",
-                  fontSize: "10px",
-                  position: "fixed",
-                  top: "5px",
-                }}
-              >
-                {storeData.cartItems.length}
-              </label>
-            </div>
-          )}
+              {storeData.cartItems.length}
+            </label>
+          </div>
         </div>
       </div>
       {mouseHover && (
@@ -127,10 +129,9 @@ const HeaderComponent = () => {
           >
             Order History
           </label>
-          <hr style={{ color: "black", width: "100%" }}></hr>
-          {localStorage.getItem("role") === "admin" && (
+          <hr style={{ color: "black", width: "100%" }}></hr>{" "}
+          {Cookies.get("role") === "ADMIN" && (
             <>
-              {" "}
               <label
                 style={{ cursor: "pointer" }}
                 onClick={() => onClick("/manageInventry")}
