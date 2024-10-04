@@ -9,6 +9,9 @@ import deleteCartItemService from "../../Lib/Services/DeleteCartItem";
 import updateCartItemService from "../../Lib/Services/UpdateCartItems";
 import PaymentCardComponent from "../../Components/PaymentCard";
 import placeOrderService from "../../Lib/Services/PlaceOrder";
+import getCartItemsService from "../../Lib/Services/GetCartItems";
+import updateBookService from "../../Lib/Services/UpdateBook";
+import getAllBooksService from "../../Lib/Services/GetAllBooks";
 
 const CheckOutComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
@@ -16,6 +19,7 @@ const CheckOutComponent = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
+  const [booksData, setBooksData] = useState([]);
   const onBuyClick = () => {
     setShowPopup(true);
   };
@@ -36,9 +40,9 @@ const CheckOutComponent = () => {
       console.log(err);
     }
   };
-  const updateCartItems = async (data) => {
+  const updateCartItems = async (data, id) => {
     try {
-      const response = await updateCartItemService(data, data.id);
+      const response = await updateCartItemService(data, id);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -64,11 +68,13 @@ const CheckOutComponent = () => {
     let updatedItem = {
       ...dataArr[itemIndex],
       quantity: dataArr[itemIndex].quantity + 1,
+      orderStatus: "Pending",
     };
     dataArr[itemIndex] = updatedItem;
-    updateCartItems(dataArr[itemIndex]);
+    updateCartItems(updatedItem.quantity, updatedItem.id);
     dispatch(setCartItems(dataArr));
   };
+
   useEffect(() => {
     var price = 0;
     var items = 0;
@@ -78,16 +84,48 @@ const CheckOutComponent = () => {
     });
     setTotalPrice(price);
     setTotalItems(items);
+    getBooksData();
   }, [storeData]);
+  const getBooksData = async () => {
+    try {
+      const response = await getAllBooksService();
+      setBooksData(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateInventry = async (name, purchased) => {
+    const book = booksData.filter((item) => item.bookName === name);
+    const bookId = book[0]["id"];
+    book[0]["availableQuantity"] = book[0]["availableQuantity"] - purchased;
+   delete(book[0]["id"]);
+    const multiPartData = new FormData();
+    for (const key in book[0]) {
+      multiPartData.append(key, book[0][key]);
+    }
+    try {
+      const response = await updateBookService(multiPartData, bookId);
+      if (response.status === 200) {
+        console.log(response);
+      } else {
+        console.log("error");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const orderSubmitCallBack = async () => {
     try {
       let obj = {
         ...storeData.cartItems[0],
         orderStatus: "placed",
       };
-      console.log(obj)
       const response = await placeOrderService(obj);
-      console.log(response);
+      console.log(obj);
+      if (response.status === 201) {
+        updateInventry(obj.bookName, obj.quantity);
+      }
     } catch (err) {
       console.log(err);
     }

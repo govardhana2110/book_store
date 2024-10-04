@@ -2,7 +2,7 @@ import request from "../CommonService";
 
 const getOrderHistoryService = () => {
   return request({
-    url: "orderHistory",
+    url: "api/orderHistory",
     method: "GET",
   });
 };

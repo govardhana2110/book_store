@@ -13,16 +13,11 @@ import DropdownComponent from "../../Components/Dropdown";
 import getAllBooksService from "../../Lib/Services/GetAllBooks";
 import getCartItemsService from "../../Lib/Services/GetCartItems";
 import addCartItemsService from "../../Lib/Services/AddCartItems";
+import getBooksByCategoryService from "../../Lib/Services/GetBooksByCategory";
+import updateCartItemService from "../../Lib/Services/UpdateCartItems";
 
 const HomeComponent = () => {
-  const categories = [
-    { name: "All", value: "all" },
-    { name: "Funny", value: "funny" },
-    { name: "Crime", value: "crime" },
-    { name: "Thriller", value: "thriller" },
-    { name: "Horror", value: "horror" },
-    { name: "History", value: "history" },
-  ];
+  const [categories, setCategories] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState({});
   const dispatch = useDispatch();
@@ -39,12 +34,34 @@ const HomeComponent = () => {
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
-      // setBooksData(response.data.slice(0, 10));
-      setAllBooks(response.data);
+
+      if (response.status === 200) {
+        setAllBooks(response.data);
+
+        const uniqueCategories = new Set();
+        response.data.map((item) => {
+          uniqueCategories.add(item.category);
+          return { name: item.category, value: item.category };
+        });
+
+        // Convert the Set to an array and filter for unique categories
+        const uniqueCategoriesArray = Array.from(uniqueCategories).map(
+          (category) => ({
+            name: category,
+            value: category,
+          })
+        );
+
+        setCategories([
+          { name: "All", value: "All" },
+          ...uniqueCategoriesArray,
+        ]);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
   const addToCartClick = (ind) => {
     let dataArr = [...storeData.cartItems];
     const existingItemIndex = dataArr.findIndex(
@@ -56,19 +73,28 @@ const HomeComponent = () => {
         quantity: dataArr[existingItemIndex].quantity + 1,
       };
       dataArr[existingItemIndex] = updatedItem;
+      updateCartItems(updatedItem.quantity, updatedItem.id);
     } else {
       let newItem = {
         ...booksdata[ind],
         quantity: 1,
       };
       dataArr = [...dataArr, newItem];
-      cartItemsChange(newItem);
+      cartItemsChange({ ...newItem, orderStatus: "Pending" });
     }
     dispatch(setCartItems(dataArr));
   };
   const cartItemsChange = async (data) => {
     try {
       const response = await addCartItemsService(data);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const updateCartItems = async (data, id) => {
+    try {
+      const response = await updateCartItemService(data, id);
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -91,16 +117,18 @@ const HomeComponent = () => {
   const onSortChange = (e) => {
     setSortBy(e.target.value);
   };
-  const sortFunction = () => {
-    if (sortBy !== "all") {
-      const sortedData = allBooks.filter((item) =>
-        Object.keys(item).some((keys) =>
-          String(item[keys]).toLowerCase().includes(sortBy.toLowerCase())
-        )
-      );
-      setBooksData(sortedData);
+  const sortFunction = async () => {
+    if (sortBy !== "All") {
+      try {
+        const response = await getBooksByCategoryService(sortBy);
+        if (response.status === 200) {
+          setAllBooks(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      setBooksData(allBooks.slice(0, 10));
+      getBooksData();
     }
   };
   useEffect(() => {
@@ -120,8 +148,8 @@ const HomeComponent = () => {
             alignItems: "center",
             flexWrap: "wrap",
             color: "black",
-            width:'80%',
-            alignContent:'center'
+            width: "80%",
+            alignContent: "center",
           }}
         >
           <SearchComponent

@@ -2,7 +2,7 @@ import request from "../CommonService";
 
 const getCartItemsService = () => {
   return request({
-    url: "cartItems",
+    url: "api/cartItems",
     method: "GET",
   });
 };

@@ -14,7 +14,7 @@ import {
   ArcElement,
 } from "chart.js";
 
-const ChartComponent = ({ type, data, labels, height, width }) => {
+const ChartComponent = ({ type, data, labels, height, width ,inventryType}) => {
   Chart.register(
     LinearScale,
     LineController,
@@ -23,8 +23,6 @@ const ChartComponent = ({ type, data, labels, height, width }) => {
     CategoryScale,
     BarController,
     BarElement,
-    CategoryScale,
-    LinearScale,
     PieController,
     ArcElement,
     Tooltip,
@@ -32,112 +30,53 @@ const ChartComponent = ({ type, data, labels, height, width }) => {
   );
 
   const chartRef = useRef(null);
-
   let chartElement;
 
-  const lineChart = () => {
+  const createChart = (chartType) => {
     const ctx = chartRef.current.getContext("2d");
     if (chartElement) {
       chartElement.destroy();
     }
+
     chartElement = new Chart(ctx, {
-      type: "line",
+      type: chartType,
       data: {
-        labels: [...labels],
+        labels: Array.isArray(labels) ? [...labels] : [],
         datasets: [
           {
-            label: "Sales",
-            data: [...data],
+            label: `${inventryType==='sales'?"Sales":'Quantity'}`,
+            data: Array.isArray(data) ? [...data] : [],
+            backgroundColor: "rgba(255, 99, 132, 0.2)", // Add background color for visibility
             borderColor: "rgba(255, 99, 132, 1)",
             borderWidth: 1,
+            fill: true, // Fill area under the line for line charts
           },
         ],
       },
       options: {
+        responsive: true,
         scales: {
+          x: {
+            type: "category",
+            title: {
+              display: true,
+              text: "Categories",
+            },
+          },
           y: {
             beginAtZero: true,
+            title: {
+              display: true,
+              text: `${inventryType==='sales'?"Sales":'Quantity'}`,
+            },
           },
         },
-      },
-    });
-  };
-  const barChart = () => {
-    const ctx = chartRef.current.getContext("2d");
-    if (chartElement) {
-      chartElement.destroy();
-    }
-    chartElement = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: [...labels],
-        datasets: [
-          {
-            label: "Sales",
-            data: [...data],
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1,
+        plugins: {
+          tooltip: {
+            enabled: true, // Enable tooltips for showing values on hover
           },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  };
-  const pieChart = () => {
-    const ctx = chartRef.current.getContext("2d");
-    if (chartElement) {
-      chartElement.destroy();
-    }
-    chartElement = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels: [...labels],
-        datasets: [
-          {
-            label: "Sales",
-            data: [...data],
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  };
-  const doughnutChart = () => {
-    const ctx = chartRef.current.getContext("2d");
-    if (chartElement) {
-      chartElement.destroy();
-    }
-    chartElement = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: [...labels],
-        datasets: [
-          {
-            label: "Sales",
-            data: [...data],
-            borderColor: "rgba(255, 99, 132, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
+          legend: {
+            display: true, // Display legend
           },
         },
       },
@@ -145,23 +84,14 @@ const ChartComponent = ({ type, data, labels, height, width }) => {
   };
 
   useEffect(() => {
-    switch (type) {
-      case "bar":
-        barChart();
-        break;
-      case "pie":
-        pieChart();
-        break;
-      case "doughnut":
-        doughnutChart();
-        break;
-      default:
-        lineChart();
+    if (Array.isArray(data) && Array.isArray(labels) && data.length && labels.length) {
+      createChart(type);
     }
     return () => {
       if (chartElement) chartElement.destroy();
     };
-  }, [type]);
+  }, [type, data, labels]);
+
   return (
     <div className="chart-container">
       <canvas ref={chartRef} height={height} width={width}></canvas>

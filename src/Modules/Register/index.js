@@ -19,7 +19,7 @@ const RegisterComponent = () => {
     lastName: "",
     username: "",
     password: "",
-    role: "",
+    role: "USER",
   });
   const userTypes = [
     { name: "Admin", value: "ADMIN" },

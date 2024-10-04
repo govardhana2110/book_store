@@ -88,7 +88,6 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
   const submitClick = async (e) => {
     e.preventDefault();
     setLoader(true);
-    console.log(editedData);
     const multiPartData = new FormData();
     for (const key in editedData) {
       multiPartData.append(key, editedData[key]);

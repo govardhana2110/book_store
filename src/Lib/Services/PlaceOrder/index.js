@@ -2,7 +2,7 @@ import request from "../CommonService";
 
 const placeOrderService = (data) => {
   return request({
-    url: "orderHistory",
+    url: "/api/orderHistory/add",
     method: "POST",
     data: { ...data },
   });

@@ -27,10 +27,24 @@ const HeaderComponent = () => {
     };
   }, []);
 
+  // const getCartItems = async () => {
+  //   try {
+  //     const response = await getCartItemsService();
+  //     dispatch(setCartItems(response.data));
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const getCartItems = async () => {
     try {
       const response = await getCartItemsService();
-      dispatch(setCartItems(response.data));
+      if (response.status === 200) {
+        console.log(response.data);
+        dispatch(setCartItems(response.data))
+      } else {
+        console.log(response);
+      }
     } catch (err) {
       console.log(err);
     }

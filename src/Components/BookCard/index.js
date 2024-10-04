@@ -24,7 +24,6 @@ const BookCardComponent = ({
             onClick={(e) => cardClick(e, index)}
             key={`${index}_${item.bookname}`}
           >
-           
             <img
               src={`${process.env.REACT_APP_JSON_URL}/${item.imageUrl.replace(
                 "src\\main\\resources\\static\\",
@@ -44,14 +43,33 @@ const BookCardComponent = ({
               <label className={`label author truncate`}>
                 <span>{item.authorName}</span>
               </label>
-              <RatingComponent rating={item.rating} ratings={item.totalRatings} />
+              {item.availableQuantity < 10 && item.availableQuantity > 0 ? (
+                <label className={`label price truncate`}>
+                  <span>Only {item.availableQuantity} Left</span>
+                </label>
+              ) : item.availableQuantity === 0 ? (
+                <label className={`label price truncate`}>
+                  <span>Out of stock</span>
+                </label>
+              ) : null}
+              <RatingComponent
+                rating={item.rating}
+                ratings={item.totalRatings}
+              />
             </div>
             <div className="buttonGroup">
-              <button id="buyNow" onClick={() => buyNowClick(index)}>
+              <button
+                id="buyNow"
+                onClick={() => buyNowClick(index)}
+                disabled={item.availableQuantity === 0}
+              >
                 Buy Now
               </button>
-
-              <button id="addToCart" onClick={() => addToCartClick(index)}>
+              <button
+                id="addToCart"
+                onClick={() => addToCartClick(index)}
+                disabled={item.availableQuantity === 0}
+              >
                 Add to cart
                 <span style={{ display: "flex", justifyContent: "center" }}>
                   {" "}

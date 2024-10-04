@@ -13,7 +13,7 @@ import LoaderComponent from "../../Components/Loader";
 const UpdateOrderComponent = () => {
   const storeData = useSelector((state) => state.cartItems);
   const [orderHistory, setOrderHistory] = useState([]);
-  const [orderStatusValue, setOrderStatusValue] = useState('');
+  const [orderStatusValue, setOrderStatusValue] = useState("");
   const [orderId, setOrderId] = useState(null);
   const [notify, setnotify] = useState(false);
   const [notifyMessage, setnotifyMessage] = useState("");
@@ -21,14 +21,14 @@ const UpdateOrderComponent = () => {
   const [loader, setLoader] = useState(false);
 
   const orderStatus = [
-    { name: "Placed", value: "placed" },
-    { name: "Confirmed", value: "confirmed" },
-    { name: "Processing", value: "processing" },
-    { name: "Shipped", value: "shipped" },
+    { name: "Placed", value: "Placed" },
+    { name: "Confirmed", value: "Confirmed" },
+    { name: "Processing", value: "Processing" },
+    { name: "Shipped", value: "Shipped" },
     { name: "In transit", value: "inTransit" },
     { name: "Out for delivery", value: "outForDelivery" },
-    { name: "Delivered", value: "delivered" },
-    { name: "Cancelled", value: "cancelled" },
+    { name: "Delivered", value: "Delivered" },
+    { name: "Cancelled", value: "Cancelled" },
   ];
   const getOrderHistory = async () => {
     try {
@@ -42,10 +42,11 @@ const UpdateOrderComponent = () => {
     getOrderHistory();
   }, []);
   const onOrderUpdateClick = async (data) => {
+    console.log(data)
     setLoader(true);
     try {
       const response = await updateOrderService(
-        { ...data, orderStatus: orderStatusValue },
+       orderStatusValue,
         data.id
       );
       console.log(response);
