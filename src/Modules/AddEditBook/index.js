@@ -53,10 +53,8 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
         availableQuantity: data.availableQuantity || "",
       });
       setImagePreview(
-        `${process.env.REACT_APP_JSON_URL}/${data.imageUrl.replace(
-          "src\\main\\resources\\static\\",
-          ""
-        )}`
+        `${process.env.REACT_APP_JSON_URL}${data.imageUrl}`
+         
       ); // Set image preview from the URL
     }
   }, [data, title]); // Only re-run when data or title changes

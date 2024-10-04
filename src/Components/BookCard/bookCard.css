@@ -45,7 +45,7 @@
 }
 
 .title {
-  color: #333; /* Dark gray for title */
+  color:#bd7305; /* Dark gray for title */
 }
 
 .rating {
@@ -55,6 +55,10 @@
 .price {
   color: #d32f2f; /* Red for price */
   font-size: 1.1rem; /* Slightly larger font for price */
+}
+.outOfStock{
+  color:orangered;
+  font-size: 0.8rem;
 }
 
 .author {

@@ -1,0 +1,30 @@
+.bookName{
+    color:#bd7305;
+}
+.authorName{
+    color: #1976d2;
+    font-size: 0.8rem;
+}
+.price{
+    color: #d32f2f; /* Red for price */
+    font-size: 1.1rem;
+}
+.rating{
+    color: gold;
+}
+.status{
+font-size: 0.8rem;
+}
+.outOfStock{
+    color:orangered;
+    font-size: 0.8rem;
+}
+.about{
+    font-size: 1rem;
+    text-align: left;
+    color:rgb(64, 173, 64);
+}
+.description{
+    color: gray;
+    font-size: 0.8rem;
+}

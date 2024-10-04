@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
 
-const PaymentCardComponent = ({orderSubmitCallBack}) => {
+const PaymentCardComponent = ({ orderSubmitCallBack }) => {
   const [cardDetails, setcardDetails] = useState({
     cardNo: "",
     expiryDate: "",
@@ -10,20 +10,23 @@ const PaymentCardComponent = ({orderSubmitCallBack}) => {
     name: "",
   });
 
-  const renderInput = (name) => {
+  const renderInput = (name, label) => {
     return (
       <InputComponent
         placeholder={`Enter ${name}`}
         value={cardDetails[name]}
         onChange={(e) => inputChange(e, name)}
-        type={name === "cardNo" ? "number" :name === "expiryDate" ? "date" : "text"}
+        label={label}
+        type={
+          name === "cardNo" ? "number" : name === "expiryDate" ? "date" : "text"
+        }
       ></InputComponent>
     );
   };
   const inputChange = (e, name) => {
     setcardDetails((prev) => ({ ...prev, [name]: e.target.value }));
   };
-  
+
   return (
     <div
       style={{
@@ -32,20 +35,25 @@ const PaymentCardComponent = ({orderSubmitCallBack}) => {
         justifyContent: "center",
       }}
     >
-      {renderInput("cardNo")}{" "}
+      <label className="labelname">Payment</label>
+      {renderInput("cardNo", "Card No")}{" "}
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
+          gap: "1rem",
         }}
       >
-        <div>{renderInput("expiryDate")}</div>
+        <div>{renderInput("expiryDate", "Expiry Date")}</div>
 
-        <div>{renderInput("cvv")} </div>
+        <div>{renderInput("cvv", "CVV")} </div>
       </div>
-      {renderInput("name")}{" "}
-      <ButtonComponent name="Place order" onClick={()=>orderSubmitCallBack()}></ButtonComponent>
+      {renderInput("name", "Name")}{" "}
+      <ButtonComponent
+        name="Place order"
+        onClick={() => orderSubmitCallBack()}
+      ></ButtonComponent>
     </div>
   );
 };

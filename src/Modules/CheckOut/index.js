@@ -20,6 +20,7 @@ const CheckOutComponent = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [booksData, setBooksData] = useState([]);
+  const [fewLeft, setFewLeft] = useState(false);
   const onBuyClick = () => {
     setShowPopup(true);
   };
@@ -50,6 +51,8 @@ const CheckOutComponent = () => {
   };
   const onQuantityReduce = (ind) => {
     let dataArr = [...storeData.cartItems];
+    setFewLeft(false);
+
     const itemIndex = dataArr.findIndex((item) => item.id === ind);
     if (dataArr[itemIndex].quantity > 1) {
       let updatedItem = {
@@ -58,21 +61,30 @@ const CheckOutComponent = () => {
       };
 
       dataArr[itemIndex] = updatedItem;
-      updateCartItems(dataArr[itemIndex]);
+      updateCartItems(updatedItem.quantity, updatedItem.id);
     }
     dispatch(setCartItems(dataArr));
   };
   const onQuantityIncrease = (ind) => {
     let dataArr = [...storeData.cartItems];
     const itemIndex = dataArr.findIndex((item) => item.id === ind);
-    let updatedItem = {
-      ...dataArr[itemIndex],
-      quantity: dataArr[itemIndex].quantity + 1,
-      orderStatus: "Pending",
-    };
-    dataArr[itemIndex] = updatedItem;
-    updateCartItems(updatedItem.quantity, updatedItem.id);
-    dispatch(setCartItems(dataArr));
+    const bookData = booksData.filter(
+      (item) => dataArr[itemIndex].bookName === item.bookName
+    );
+    if (bookData[0].availableQuantity > dataArr[itemIndex].quantity) {
+      setFewLeft(false);
+
+      let updatedItem = {
+        ...dataArr[itemIndex],
+        quantity: dataArr[itemIndex].quantity + 1,
+        orderStatus: "Pending",
+      };
+      dataArr[itemIndex] = updatedItem;
+      updateCartItems(updatedItem.quantity, updatedItem.id);
+      dispatch(setCartItems(dataArr));
+    } else {
+      setFewLeft(true);
+    }
   };
 
   useEffect(() => {
@@ -98,8 +110,10 @@ const CheckOutComponent = () => {
   const updateInventry = async (name, purchased) => {
     const book = booksData.filter((item) => item.bookName === name);
     const bookId = book[0]["id"];
+    book[0]["image"] = book[0]["imageUrl"];
     book[0]["availableQuantity"] = book[0]["availableQuantity"] - purchased;
-   delete(book[0]["id"]);
+    delete book[0]["imageUrl"];
+    delete book[0]["id"];
     const multiPartData = new FormData();
     for (const key in book[0]) {
       multiPartData.append(key, book[0][key]);
@@ -155,7 +169,16 @@ const CheckOutComponent = () => {
               >
                 <div>
                   {" "}
-                  <img src={item.image} alt="#" height={150} width={150}></img>
+                  <img
+                    src={
+                      item.imageUrl
+                        ? `${process.env.REACT_APP_JSON_URL}${item.imageUrl}`
+                        : null
+                    }
+                    alt="#"
+                    height={150}
+                    width={150}
+                  ></img>
                 </div>
                 <div
                   style={{
@@ -165,11 +188,12 @@ const CheckOutComponent = () => {
                     width: "100%",
                   }}
                 >
-                  <label>{item.title}</label>
-                  <label>By:{item.author}</label>
-                  <label>Description:{item.description}</label>
-                  <label>₹{item.price}</label>
-
+                  <label className="bookName">{item.bookName}</label>
+                  <label className="authorName">By:{item.authorName}</label>
+                  <label className="about">Description:</label>
+                  <label className="description">{item.description}</label>
+                  <label className="price">₹{item.price}</label>
+                  <label className="rating">{item.rating}/5</label>
                   <div
                     style={{
                       display: "flex",
@@ -180,28 +204,46 @@ const CheckOutComponent = () => {
                       flexWrap: "wrap",
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "row",
-                        gap: "0.2rem",
-                      }}
-                    >
-                      <button onClick={() => onQuantityReduce(item.id)}>
-                        -
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => onQuantityIncrease(item.id)}>
-                        +
-                      </button>
+                    <div>
+                      {" "}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "row",
+                          gap: "0.2rem",
+                        }}
+                      >
+                        <button
+                          style={{ padding: "0.3rem" }}
+                          onClick={() => onQuantityReduce(item.id)}
+                        >
+                          -
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button
+                          style={{ padding: "0.3rem" }}
+                          onClick={() => onQuantityIncrease(item.id)}
+                        >
+                          +
+                        </button>
+                      </div>{" "}
+                      {fewLeft && (
+                        <label className="fewLeft">
+                          Only {item.quantity} left
+                        </label>
+                      )}
                     </div>
+
                     <RatingComponent
                       rating={item.rating}
-                      ratings={item.ratings}
+                      ratings={item.totalRatings}
                     ></RatingComponent>
 
-                    <label>Total Price :₹{item.price * item.quantity}</label>
+                    <label className="labelName">
+                      Total Price :₹
+                      {item.price * item.quantity}
+                    </label>
                     <button onClick={() => onRemoveClick(index)}>Remove</button>
                   </div>
                   <hr style={{ color: "black", width: "100%" }}></hr>
@@ -217,17 +259,21 @@ const CheckOutComponent = () => {
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <label>Total Items:{totalItems}</label>
-              <label>Total Gross:₹{totalPrice}</label>
+              <label className="labelName">Total Items:{totalItems}</label>
+              <label className="labelName">Gross Total:₹{totalPrice}</label>
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               {" "}
-              <label>
+              <label className="labelName">
                 Delivery Charges:₹{storeData.cartItems.length ? 43.6 : 0}
               </label>
-              <label>CGST(18%):₹{(0.18 * totalPrice).toFixed(2)}</label>
-              <label>SGST(18%):₹{(0.18 * totalPrice).toFixed(2)}</label>
-              <label>
+              <label className="labelName">
+                CGST(18%):₹{(0.18 * totalPrice).toFixed(2)}
+              </label>
+              <label className="labelName">
+                SGST(18%):₹{(0.18 * totalPrice).toFixed(2)}
+              </label>
+              <label className="labelName">
                 Amount Payable:₹
                 {(
                   totalPrice +
@@ -235,6 +281,7 @@ const CheckOutComponent = () => {
                   (storeData.cartItems.length ? 43.6 : 0)
                 ).toFixed(2)}
               </label>
+              &nbsp;
               <button onClick={() => onBuyClick()}>Buy</button>
             </div>
           </div>

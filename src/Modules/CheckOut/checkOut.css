@@ -5,4 +5,11 @@
     padding: 2rem;
     width: 85vw;
   }
-  
+  .labelName{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .fewLeft{
+    color:orangered;
+    font-size: 0.8rem;
+  }

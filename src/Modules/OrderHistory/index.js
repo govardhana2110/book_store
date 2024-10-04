@@ -40,7 +40,7 @@ const OrderHistoryComponent = () => {
                   <div>
                     {" "}
                     <img
-                      src={item.image}
+                      src={`${process.env.REACT_APP_JSON_URL}${item.imageUrl}`}
                       alt="#"
                       height={150}
                       width={150}
@@ -54,10 +54,11 @@ const OrderHistoryComponent = () => {
                       width: "100%",
                     }}
                   >
-                    <label>{item.title}</label>
-                    <label>By:{item.author}</label>
-                    <label>Description:</label>
-                    <label>₹{item.price}</label>
+                    <label className="bookName">{item.bookName}</label>
+                    <label className="authorName">{item.authorName}</label>
+                    <label className="about">Description:</label>
+                    <label className="description">{item.description}</label>
+                    <label className="price">₹{item.price}</label>
                     <div
                       style={{
                         display: "flex",
@@ -70,11 +71,17 @@ const OrderHistoryComponent = () => {
                     >
                       <RatingComponent
                         rating={item.rating}
-                        ratings={item.ratings}
+                        ratings={item.totalRatings}
                       ></RatingComponent>
-                      <label>Total Quantity :{item.quantity}</label>
-                      <label>Total Price :₹{item.price * item.quantity}</label>
-                      <label>Status :{item.orderStatus}</label>
+                      <label className="labelName">
+                        Total Quantity :{item.quantity}
+                      </label>
+                      <label className="labelName">
+                        Total Price :₹{item.price * item.quantity}
+                      </label>
+                      <label className="labelName">
+                        Status :{item.orderStatus}
+                      </label>
                     </div>
                   </div>
                 </div>

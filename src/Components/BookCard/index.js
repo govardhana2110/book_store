@@ -25,10 +25,9 @@ const BookCardComponent = ({
             key={`${index}_${item.bookname}`}
           >
             <img
-              src={`${process.env.REACT_APP_JSON_URL}/${item.imageUrl.replace(
-                "src\\main\\resources\\static\\",
-                ""
-              )}`}
+              src={
+                `${process.env.REACT_APP_JSON_URL}${item.imageUrl}`
+              }
               alt={item.title}
               style={{ height: "10rem", width: "10rem" }}
             />
@@ -44,11 +43,11 @@ const BookCardComponent = ({
                 <span>{item.authorName}</span>
               </label>
               {item.availableQuantity < 10 && item.availableQuantity > 0 ? (
-                <label className={`label price truncate`}>
+                <label className={`label outOfStock truncate`}>
                   <span>Only {item.availableQuantity} Left</span>
                 </label>
               ) : item.availableQuantity === 0 ? (
-                <label className={`label price truncate`}>
+                <label className={`label outOfStock truncate`}>
                   <span>Out of stock</span>
                 </label>
               ) : null}
