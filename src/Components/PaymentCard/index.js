@@ -13,7 +13,7 @@ const PaymentCardComponent = ({ orderSubmitCallBack }) => {
   const renderInput = (name, label) => {
     return (
       <InputComponent
-        placeholder={`Enter ${name}`}
+        placeholder={label}
         value={cardDetails[name]}
         onChange={(e) => inputChange(e, name)}
         label={label}
