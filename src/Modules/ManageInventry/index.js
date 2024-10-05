@@ -9,21 +9,22 @@ import deleteBookService from "../../Lib/Services/DeleteBook";
 import NotifyComponent from "../../Components/Notify";
 import LoaderComponent from "../../Components/Loader";
 
-const ManageInventryComponent = () => {
+const ManageInventoryComponent = () => {
   const [booksData, setBooksData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState();
   const [editRecord, setEditRecord] = useState();
-  const [addEditFlag, setAddEditFalg] = useState("Add");
-  const [notify, setnotify] = useState(false);
-  const [notifyMessage, setnotifyMessage] = useState("");
-  const [notifyType, setnotifyType] = useState("");
+  const [addEditFlag, setAddEditFlag] = useState("Add");
+  const [notify, setNotify] = useState(false);
+  const [notifyMessage, setNotifyMessage] = useState("");
+  const [notifyType, setNotifyType] = useState("");
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     getBooksData();
   }, [showPopup]);
+
   const getBooksData = async () => {
     try {
       const response = await getAllBooksService();
@@ -33,22 +34,27 @@ const ManageInventryComponent = () => {
       console.log(err);
     }
   };
+
   const onAddClick = () => {
     setShowPopup(true);
-    setAddEditFalg("Add");
+    setAddEditFlag("Add");
   };
+
   const editClick = (id) => {
     setEditRecord(booksData[id]);
     setShowPopup(true);
-    setAddEditFalg("Edit");
+    setAddEditFlag("Edit");
   };
+
   const deleteClick = (id) => {
     setDeleteConfirmation(true);
     setDeleteIndex(id);
   };
+
   const onCloseClick = () => {
     setShowPopup(false);
   };
+
   const deleteBook = async (id) => {
     setLoader(true);
     try {
@@ -57,68 +63,83 @@ const ManageInventryComponent = () => {
       setTimeout(() => {
         setLoader(false);
         setShowPopup(false);
-        setDeleteConfirmation(false)
-        setnotifyType("success");
-        setnotifyMessage("Book Deleted Successfully");
-        setnotify(true);
+        setDeleteConfirmation(false);
+        setNotifyType("success");
+        setNotifyMessage("Book Deleted Successfully");
+        setNotify(true);
       }, 300);
     } catch (err) {
       console.log(err);
       setTimeout(() => {
         setLoader(false);
         setShowPopup(false);
-        setDeleteConfirmation(false)
-        setnotifyType("error");
-        setnotifyMessage("Failed To Delete Book");
-        setnotify(true);
+        setDeleteConfirmation(false);
+        setNotifyType("error");
+        setNotifyMessage("Failed To Delete Book");
+        setNotify(true);
       }, 300);
     }
   };
+
   const onYesClick = (id) => {
     deleteBook(id);
   };
+
   const onNoClick = () => {
     setDeleteConfirmation(false);
   };
+
   const onCloseConfirmClick = () => {
     setDeleteConfirmation(false);
   };
+
   const submitCallBack = (message, type) => {
     if (type === "success") {
       setShowPopup(false);
-      setnotifyType("success");
-      setnotifyMessage(message);
-      setnotify(true);
+      setNotifyType("success");
+      setNotifyMessage(message);
+      setNotify(true);
     } else {
-      setnotifyType("error");
-      setnotifyMessage(message);
-      setnotify(true);
+      setNotifyType("error");
+      setNotifyMessage(message);
+      setNotify(true);
     }
   };
+
   return (
     <>
-      <HeaderComponent></HeaderComponent>
+      <HeaderComponent />
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
+          flexDirection: "column",
+          alignItems: "center",
           color: "black",
           paddingTop: "4rem",
-          width: "90%",
+          width: "100%",
         }}
       >
-        {" "}
-        <span>Manage Inventry</span>
-        <button onClick={() => onAddClick()}>Add Book</button>
-      </div>
-      <div style={{ width: "90%" }}>
-        {" "}
-        <TableComponent
-          data={booksData}
-          editClick={editClick}
-          deleteClick={deleteClick}
-        ></TableComponent>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "80%",
+            marginBottom: "1rem",
+            alignItems: "center",
+          }}
+        >
+          <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Manage Inventory</span>
+          <button onClick={onAddClick} style={{ padding: "0.5rem 1rem", cursor: "pointer" }}>
+            Add Book
+          </button>
+        </div>
+        <div style={{ width: "80%" }}>
+          <TableComponent
+            data={booksData}
+            editClick={editClick}
+            deleteClick={deleteClick}
+          />
+        </div>
       </div>
       {showPopup && (
         <ModelPopupComponent onCloseClick={onCloseClick}>
@@ -126,27 +147,28 @@ const ManageInventryComponent = () => {
             data={editRecord}
             title={addEditFlag}
             submitCallBack={submitCallBack}
-          ></AddEditBookComponent>
+          />
         </ModelPopupComponent>
       )}
       {deleteConfirmation && (
         <ConfirmationComponent
-          title="Are you sure? you want to delete this record..?"
+          title="Are you sure? You want to delete this record..?"
           id={deleteIndex}
-          onCloseConfirmClick={() => onCloseConfirmClick()}
+          onCloseConfirmClick={onCloseConfirmClick}
           onYesClick={onYesClick}
           onNoClick={onNoClick}
-        ></ConfirmationComponent>
+        />
       )}
       {notify && (
         <NotifyComponent
           message={notifyMessage}
           type={notifyType}
           show={notify}
-        ></NotifyComponent>
+        />
       )}
-      {loader && <LoaderComponent></LoaderComponent>}
+      {loader && <LoaderComponent />}
     </>
   );
 };
-export default ManageInventryComponent;
+
+export default ManageInventoryComponent;

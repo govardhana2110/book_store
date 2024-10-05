@@ -1,13 +1,53 @@
+/* salesStatistics.css */
 .mainCardDiv {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),  /* Soft shadow for depth */
-    0 8px 16px rgba(0, 0, 0, 0.2); /* Sharp shadow cutting the sides */
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 90vw;
-  flex-wrap: wrap;
+  max-width: 1200px; /* Set a max width for larger screens */
+  margin: auto; /* Center on the page */
   background-color: white;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Allow items to wrap */
+  margin: 1rem 0; /* Space between rows */
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1rem; /* Space around each chart */
+}
+
+label {
+  color: black;
+  font-size: 1.2rem; /* Larger font for labels */
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    flex-direction: column; /* Stack charts on smaller screens */
+    align-items: center; /* Center charts */
+  }
+
+  .chart-wrapper {
+    margin: 0.5rem 0; /* Less margin for small screens */
+  }
+
+  .mainCardDiv {
+    padding: 0.5rem; /* Reduced padding on smaller screens */
+  }
+
+  label {
+    font-size: 1rem; /* Smaller font size for labels */
+  }
 }

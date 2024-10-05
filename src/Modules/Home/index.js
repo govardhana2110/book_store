@@ -148,8 +148,8 @@ const HomeComponent = () => {
             alignItems: "center",
             flexWrap: "wrap",
             color: "black",
-            width: "80%",
             alignContent: "center",
+            padding:'0 5rem 0 5rem'
           }}
         >
           <SearchComponent
