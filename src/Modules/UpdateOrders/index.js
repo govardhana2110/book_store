@@ -15,9 +15,9 @@ const UpdateOrderComponent = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [orderStatusValue, setOrderStatusValue] = useState("");
   const [orderId, setOrderId] = useState(null);
-  const [notify, setnotify] = useState(false);
-  const [notifyMessage, setnotifyMessage] = useState("");
-  const [notifyType, setnotifyType] = useState("");
+  const [notify, setNotify] = useState(false);
+  const [notifyMessage, setNotifyMessage] = useState("");
+  const [notifyType, setNotifyType] = useState("");
   const [loader, setLoader] = useState(false);
 
   const orderStatus = [
@@ -30,6 +30,7 @@ const UpdateOrderComponent = () => {
     { name: "Delivered", value: "Delivered" },
     { name: "Cancelled", value: "Cancelled" },
   ];
+
   const getOrderHistory = async () => {
     try {
       const response = await getOrderHistoryService();
@@ -38,53 +39,44 @@ const UpdateOrderComponent = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getOrderHistory();
   }, []);
+
   const onOrderUpdateClick = async (data) => {
-    console.log(data);
     setLoader(true);
     try {
       const response = await updateOrderService(orderStatusValue, data.id);
-      console.log(response);
-      setTimeout(() => {
-        setLoader(false);
-        setnotifyType("success");
-        setnotifyMessage("Order Updated Successfully");
-        setnotify(true);
-      }, 300);
+      setLoader(false);
+      setNotifyType("success");
+      setNotifyMessage("Order Updated Successfully");
+      setNotify(true);
     } catch (err) {
       console.log(err);
-      setTimeout(() => {
-        setLoader(false);
-        setnotifyType("error");
-        setnotifyMessage("Failed to update order");
-        setnotify(true);
-      }, 300);
+      setLoader(false);
+      setNotifyType("error");
+      setNotifyMessage("Failed to update order");
+      setNotify(true);
     }
   };
+
   const onDroDownChange = (e, id) => {
     setOrderId(id);
     setOrderStatusValue(e.target.value);
   };
+
   return (
     <>
-      <HeaderComponent></HeaderComponent>
-      <div style={{ color: "black", position: "absolute", top: "0%" }}>
+      <HeaderComponent />
+      <div style={{ color: "black", position: "relative", padding: "2rem 0" }}>
         <h6 style={{ paddingTop: "3rem" }}>Manage Order</h6>
         <div className="backGroundCard">
           {orderHistory &&
             orderHistory.map((item, index) => (
               <>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "2rem",
-                  }}
-                >
-                  <div>
-                    {" "}
+                <div className="orderItem" key={item.id}>
+                  <div className="orderImage">
                     <img
                       src={
                         item.imageUrl
@@ -93,19 +85,11 @@ const UpdateOrderComponent = () => {
                       }
                       alt="#"
                       height={150}
-                      width={150}
-                    ></img>
+                    />
                   </div>
-                  <div
-                    style={{
-                      textAlign: "left",
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "100%",
-                    }}
-                  >
+                  <div className="orderDetails">
                     <label className="bookName">{item.bookName}</label>
-                    <label className="authorName">By:{item.authorName}</label>
+                    <label className="authorName">By: {item.authorName}</label>
                     <label className="about">Description:</label>
                     <label className="description">{item.description}</label>
                     <label className="price">₹{item.price}</label>
@@ -115,40 +99,36 @@ const UpdateOrderComponent = () => {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         fontSize: "smaller",
-                        alignItems: "center",
                         flexWrap: "wrap",
                       }}
                     >
                       <RatingComponent
                         rating={item.rating}
                         ratings={item.totalRatings}
-                      ></RatingComponent>
+                      />
                       <label className="labelName">
-                        Total Quantity :{item.quantity}
+                        Total Quantity: {item.quantity}
                       </label>
                       <label className="labelName">
-                        Total Price :₹{item.price * item.quantity}
+                        Total Price: ₹{item.price * item.quantity}
                       </label>
-                      <div>
-                        {" "}
-                        <DropdownComponent
-                          options={orderStatus}
-                          placeHolder="Select status"
-                          value={
-                            (orderId === index && orderStatusValue) ||
-                            item.orderStatus
-                          }
-                          onChange={(e) => onDroDownChange(e, index)}
-                        ></DropdownComponent>{" "}
-                      </div>
+                      <DropdownComponent
+                        options={orderStatus}
+                        placeHolder="Select status"
+                        value={
+                          (orderId === index && orderStatusValue) ||
+                          item.orderStatus
+                        }
+                        onChange={(e) => onDroDownChange(e, index)}
+                      />
                       <ButtonComponent
                         name="Update"
                         onClick={() => onOrderUpdateClick(item)}
-                      ></ButtonComponent>
+                      />
                     </div>
                   </div>
                 </div>
-                <hr></hr>
+                <hr style={{color:'black',width:'100%'}}></hr>
               </>
             ))}
         </div>
@@ -158,10 +138,11 @@ const UpdateOrderComponent = () => {
           message={notifyMessage}
           type={notifyType}
           show={notify}
-        ></NotifyComponent>
+        />
       )}
-      {loader && <LoaderComponent></LoaderComponent>}
+      {loader && <LoaderComponent />}
     </>
   );
 };
+
 export default UpdateOrderComponent;

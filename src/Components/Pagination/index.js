@@ -39,11 +39,19 @@ const PaginationComponent = ({ data, paginationData }) => {
   };
   return (
     <div className="mainDiv">
-      Records per page{" "}
-      <DropdownComponent options={records} placeHolder=""></DropdownComponent>
-      <ButtonComponent onClick={() => prevClick()}>{`<`}</ButtonComponent>Page
-      {currentPage} of {totalPages}{" "}
-      <ButtonComponent onClick={() => nextClick()}>{`>`}</ButtonComponent>
+      {/* Records per page{" "}
+      <DropdownComponent options={records} placeHolder=""></DropdownComponent> */}
+      <ButtonComponent onClick={() => prevClick()} name="Prev">
+        {" "}
+      </ButtonComponent>
+      <label style={{ color: "black", fontSize: "1rem", fontWeight: "600" }}>
+        Page
+        {currentPage} of {totalPages}{" "}
+      </label>
+      <ButtonComponent
+        onClick={() => nextClick()}
+        name="Next"
+      ></ButtonComponent>
     </div>
   );
 };

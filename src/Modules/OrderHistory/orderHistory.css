@@ -1,0 +1,29 @@
+.backGroundCard {
+    /* background: linear-gradient(135deg, #fbfbfb 0%, #fbedee 50%, #accbee 100%); */
+    padding: 1rem; /* Adjust as needed */
+    border-radius: 8px; /* Optional: for rounded corners */
+    overflow: hidden; /* Prevents overflow */
+  }
+  
+  .orderItem {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 1rem; /* Space between items */
+  }
+  
+  .orderImage {
+    flex: 0 0 150px; /* Fixed width for the image */
+  }
+  
+  .orderDetails {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    flex: 1; /* This will make it take the remaining space */
+  }
+  
+  .labelName {
+    margin-left: 0.5rem; /* Optional: space between labels */
+  }
+  

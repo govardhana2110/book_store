@@ -1,0 +1,51 @@
+/* Global Styles */
+* {
+    box-sizing: border-box; /* Ensures padding and borders are included in the total width and height */
+  }
+  
+  /* Main Application Styles */
+  .App {
+    overflow-x: hidden; /* Prevent horizontal overflow */
+  }
+  
+  .App-header {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align */
+    min-height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+    padding: 0 1rem; /* Add some padding */
+  }
+  
+  /* Update Orders Specific Styles */
+  .backGroundCard {
+    /* background: linear-gradient(135deg, #fbfbfb 0%, #fbedee 50%, #accbee 100%); */
+    /* width: 100%;  */
+    padding: 1rem; /* Padding for internal spacing */
+    border-radius: 8px; /* Optional */
+    overflow: hidden; /* Hide overflow */
+    display: flex;
+    flex-direction: column; /* Stack order items vertically */
+  }
+  
+  .orderItem {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 1rem; /* Space between items */
+    width: 100%; /* Full width */
+  }
+  
+  .orderImage {
+    flex: 0 0 150px; /* Fixed width for the image */
+  }
+  
+  .orderDetails {
+    text-align: left;
+    flex: 1; /* This will make it take the remaining space */
+  }
+  
+  .labelName {
+    margin-left: 0.5rem; /* Optional: space between labels */
+  }
+  

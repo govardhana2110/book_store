@@ -1,0 +1,11 @@
+.searchSortDiv {
+  display: "flex";
+  flex-direction: row;
+  justify-content: "space-between";
+  align-items: "center";
+  flex-wrap: "wrap";
+  color: "black";
+  align-content: "center";
+  padding: "0 5rem 0 5rem";
+  top: 0;
+}
