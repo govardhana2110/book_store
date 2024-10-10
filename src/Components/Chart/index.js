@@ -14,7 +14,7 @@ import {
   ArcElement,
 } from "chart.js";
 
-const ChartComponent = ({ type, data, labels, height, width ,inventryType}) => {
+const ChartComponent = ({ type, data, labels, height, width, inventryType,yAxis }) => {
   Chart.register(
     LinearScale,
     LineController,
@@ -32,11 +32,27 @@ const ChartComponent = ({ type, data, labels, height, width ,inventryType}) => {
   const chartRef = useRef(null);
   let chartElement;
 
+  const generateColors = (count) => {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+      const hue = Math.floor(Math.random() * 360);
+      const saturation = Math.floor(Math.random() * 40 + 60); 
+      const lightness = Math.floor(Math.random() * 20 + 30);
+      const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+      colors.push(color);
+    }
+    return colors;
+  };
+  
+
   const createChart = (chartType) => {
     const ctx = chartRef.current.getContext("2d");
     if (chartElement) {
       chartElement.destroy();
     }
+
+    const colorCount = Array.isArray(data) ? data.length : 0;
+    const backgroundColors = generateColors(colorCount); // Generate unique colors for each bar
 
     chartElement = new Chart(ctx, {
       type: chartType,
@@ -44,12 +60,11 @@ const ChartComponent = ({ type, data, labels, height, width ,inventryType}) => {
         labels: Array.isArray(labels) ? [...labels] : [],
         datasets: [
           {
-            label: `${inventryType==='sales'?"Sales":'Quantity'}`,
+            label: `${yAxis === 'inventry' ? "Quantity" : yAxis}`,
             data: Array.isArray(data) ? [...data] : [],
-            backgroundColor: "rgba(255, 99, 132, 0.2)", // Add background color for visibility
-            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: backgroundColors, // Use different colors for each bar
+            borderColor: backgroundColors.map(color => color.replace('0.2', '1')), // Darker shade for borders
             borderWidth: 1,
-            fill: true, // Fill area under the line for line charts
           },
         ],
       },
@@ -60,23 +75,23 @@ const ChartComponent = ({ type, data, labels, height, width ,inventryType}) => {
             type: "category",
             title: {
               display: true,
-              text: "Categories",
+              text: inventryType === 'inventry' ? "Category" :inventryType,
             },
           },
           y: {
             beginAtZero: true,
             title: {
               display: true,
-              text: `${inventryType==='sales'?"Sales":'Quantity'}`,
+              text: `${yAxis === 'inventry' ? "Quantity" : yAxis}`,
             },
           },
         },
         plugins: {
           tooltip: {
-            enabled: true, // Enable tooltips for showing values on hover
+            enabled: true,
           },
           legend: {
-            display: true, // Display legend
+            display: true,
           },
         },
       },

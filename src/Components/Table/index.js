@@ -9,8 +9,21 @@ const TableComponent = ({ data, editClick, deleteClick }) => {
           <tr>
             {data.length > 0 &&
               Object.keys(data[0]).map((key) => {
-                if (key !== 'rating' && key !== 'totalRatings') {
-                  return <th key={key}>{key}</th>;
+                if (
+                  key !== "rating" &&
+                  key !== "totalRatings" &&
+                  key !== "imageUrl"
+                ) {
+                  return (
+                    <th key={key}>
+                      {key
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())}
+                    </th>
+                  );
+                }
+                if (key === "imageUrl") {
+                  return <th key="Image">Image</th>;
                 }
                 return null;
               })}
@@ -22,7 +35,7 @@ const TableComponent = ({ data, editClick, deleteClick }) => {
             data.map((item, index) => (
               <tr key={`${index}_${item.bookName}`}>
                 {Object.keys(item).map((key) => {
-                  if (key !== 'rating' && key !== 'totalRatings') {
+                  if (key !== "rating" && key !== "totalRatings") {
                     return (
                       <td className="truncate" key={item[key]}>
                         {key === "imageUrl" ? (
@@ -40,7 +53,7 @@ const TableComponent = ({ data, editClick, deleteClick }) => {
                   }
                   return null;
                 })}
-                <td className="action-buttons">
+                <td style={{ display: "flex", gap: "1rem" }}>
                   <button onClick={() => editClick(index)}>Edit</button>
                   <button onClick={() => deleteClick(item.id)}>Delete</button>
                 </td>

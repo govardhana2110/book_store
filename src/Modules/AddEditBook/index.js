@@ -52,10 +52,7 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
         image: data.imageUrl || "", // This is for preview only, won't be used for file input
         availableQuantity: data.availableQuantity || "",
       });
-      setImagePreview(
-        `${process.env.REACT_APP_JSON_URL}${data.imageUrl}`
-         
-      ); // Set image preview from the URL
+      setImagePreview(`${process.env.REACT_APP_JSON_URL}${data.imageUrl}`); // Set image preview from the URL
     }
   }, [data, title]); // Only re-run when data or title changes
 
@@ -114,19 +111,47 @@ const AddEditBookComponent = ({ data, title, submitCallBack }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <label>{title} Record</label>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
+                justifyContent: "center",
+              }}
+            >
               {renderInput("bookName", "text", "Book Name")}
               {renderInput("authorName", "text", "Author")}
             </div>
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
+                justifyContent: "center",
+              }}
+            >
               {renderInput("rating", "number", "Rating")}
               {renderInput("price", "number", "Price")}
             </div>
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
+                justifyContent: "center",
+              }}
+            >
               {renderInput("totalRatings", "number", "Total Ratings")}
               {renderInput("category", "text", "Category")}
             </div>
-            <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
+                justifyContent: "center",
+              }}
+            >
               {renderInput("availableQuantity", "number", "Available Quantity")}
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <InputComponent

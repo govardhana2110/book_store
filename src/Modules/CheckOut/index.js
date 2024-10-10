@@ -134,6 +134,7 @@ const CheckOutComponent = () => {
       let obj = {
         ...storeData.cartItems[0],
         orderStatus: "placed",
+        orderedDate: new Date(),
       };
       const response = await placeOrderService(obj);
       console.log(obj);

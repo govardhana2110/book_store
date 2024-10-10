@@ -4,7 +4,7 @@ import "./popupModel.css";
 const ModelPopupComponent = ({ children,onCloseClick }) => {
   return (
     <div className="blurBackground">
-      <div className="contentBody">
+      <div className="contentBodyDiv">
         {" "}
         <div
           style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}

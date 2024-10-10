@@ -115,7 +115,6 @@ const ManageInventoryComponent = () => {
           flexDirection: "column",
           alignItems: "center",
           color: "black",
-          paddingTop: "4rem",
           width: "100%",
         }}
       >
@@ -123,17 +122,22 @@ const ManageInventoryComponent = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            width: "80%",
+            width: "90%",
             marginBottom: "1rem",
             alignItems: "center",
           }}
         >
-          <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Manage Inventory</span>
-          <button onClick={onAddClick} style={{ padding: "0.5rem 1rem", cursor: "pointer" }}>
+          <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+            Manage Inventory
+          </span>
+          <button
+            onClick={onAddClick}
+            style={{ padding: "0.5rem 1rem", cursor: "pointer" }}
+          >
             Add Book
           </button>
         </div>
-        <div style={{ width: "80%" }}>
+        <div>
           <TableComponent
             data={booksData}
             editClick={editClick}
