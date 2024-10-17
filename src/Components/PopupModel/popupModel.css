@@ -31,7 +31,7 @@
   overflow-wrap: break-word; /* Prevent overflow */
   overflow:auto; /* Ensure content stays within bounds */
   text-align: center;
-  max-width: fit-content;
+  max-width: 500px;
   max-height: 400px;
 }
 

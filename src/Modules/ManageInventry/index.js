@@ -116,6 +116,9 @@ const ManageInventoryComponent = () => {
           alignItems: "center",
           color: "black",
           width: "100%",
+          top:'0',
+          position:'absolute',
+          paddingTop:'5rem'
         }}
       >
         <div

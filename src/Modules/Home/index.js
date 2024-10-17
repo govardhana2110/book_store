@@ -15,6 +15,7 @@ import getCartItemsService from "../../Lib/Services/GetCartItems";
 import addCartItemsService from "../../Lib/Services/AddCartItems";
 import getBooksByCategoryService from "../../Lib/Services/GetBooksByCategory";
 import updateCartItemService from "../../Lib/Services/UpdateCartItems";
+import getBooksByPageService from "../../Lib/Services/GetBooksByPage";
 
 const HomeComponent = () => {
   const [categories, setCategories] = useState([]);
@@ -26,18 +27,18 @@ const HomeComponent = () => {
   const [booksdata, setBooksData] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
   const [sortBy, setSortBy] = useState("");
-
+  const [totalRecords, setTotalRecords] = useState(0);
   useEffect(() => {
     getBooksData();
   }, []);
 
-  const getBooksData = async () => {
+  const getBooksData = async (page = 0, size = 10) => {
     try {
-      const response = await getAllBooksService();
-
+      const response = await getBooksByPageService(page, size);
       if (response.status === 200) {
-        setAllBooks(response.data);
-
+        setAllBooks(response.data.content);
+        setBooksData(response.data.content);
+        setTotalRecords(response.data.totalElements);
         const uniqueCategories = new Set();
         response.data.map((item) => {
           uniqueCategories.add(item.category);
@@ -115,12 +116,12 @@ const HomeComponent = () => {
     setBooksData([...data]);
   };
   const onSortChange = (e) => {
-    setSortBy(e.target.value);
+    sortFunction(e.target.value);
   };
-  const sortFunction = async () => {
+  const sortFunction = async (sortVal) => {
     if (sortBy !== "All") {
       try {
-        const response = await getBooksByCategoryService(sortBy);
+        const response = await getBooksByCategoryService(sortVal);
         if (response.status === 200) {
           setAllBooks(response.data);
         }
@@ -131,11 +132,9 @@ const HomeComponent = () => {
       getBooksData();
     }
   };
-  useEffect(() => {
-    sortFunction();
-  }, [sortBy]);
-  const paginationData = (data) => {
-    setBooksData(data);
+
+  const paginationData = (page, size) => {
+    getBooksData(page, size);
   };
   return (
     <>
@@ -149,8 +148,8 @@ const HomeComponent = () => {
             flexWrap: "wrap",
             color: "black",
             alignContent: "center",
-            padding:'0 5rem 0 5rem',
-            top:'0'
+            padding: "0 5rem 0 5rem",
+            top: "0",
           }}
         >
           <SearchComponent
@@ -173,7 +172,7 @@ const HomeComponent = () => {
           onCardClick={onCardClick}
         ></BookCardComponent>
       </div>
-      <PaginationComponent data={allBooks} paginationData={paginationData} />
+      <PaginationComponent data={allBooks} paginationData={paginationData} totalRecords={totalRecords}/>
       {showPopup && (
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           <ModelPopupComponent onCloseClick={() => onCloseClick()}>

@@ -12,7 +12,7 @@ const ConfirmationComponent = ({
     <div className="blurBackground">
       <div className="contentBody">
         {" "}
-        <div
+        {/* <div
           style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
           onClick={() => onCloseConfirmClick()}
         >
@@ -23,7 +23,7 @@ const ConfirmationComponent = ({
             height={15}
             width={15}
           ></img>
-        </div>
+        </div> */}
         <div
           style={{
             display: "flex",

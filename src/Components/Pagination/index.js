@@ -3,7 +3,7 @@ import "./pagination.css";
 import DropdownComponent from "../Dropdown";
 import ButtonComponent from "../Button";
 
-const PaginationComponent = ({ data, paginationData }) => {
+const PaginationComponent = ({ data,totalRecords, paginationData }) => {
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [selectedPage, setSelectedPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -16,20 +16,19 @@ const PaginationComponent = ({ data, paginationData }) => {
     { name: "50", value: "50" },
   ];
   useEffect(() => {
-    const pages = data.length / recordsPerPage;
+    const pages = totalRecords/ recordsPerPage;
     setTotalPages(Math.ceil(pages));
-    paginationData(data.slice(0, 10));
   }, [data]);
   const nextClick = () => {
     if (currentPage < totalPages) {
-      paginationData(data.slice(currentPage * 10, currentPage * 10 + 10));
+      paginationData(currentPage+1,recordsPerPage);
       setCurrentPage((prev) => prev + 1);
     }
   };
   const prevClick = () => {
     if (currentPage > 1) {
       if (currentPage === 2) {
-        paginationData(data.slice(0, 10));
+        paginationData(currentPage-1,recordsPerPage);
         setCurrentPage(1);
       } else {
         paginationData(data.slice((currentPage - 1) * 10, currentPage * 10));
